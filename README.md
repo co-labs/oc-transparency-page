@@ -32,7 +32,7 @@ const client = new ApolloClient({
 
 const App = () => {
   return <ApolloProvider client={client}>
-    <TransparencyPage client={client} slug={'co-labs'} labels={{'allExpensesFrom' : 'Toutes les dépenses du {date}'}} />
+    <TransparencyPage client={client} slug={'co-labs'} messages={{'allExpensesFrom' : 'Toutes les dépenses du {date}'}} />
   </ApolloProvider>
 }
 
@@ -41,7 +41,7 @@ export default App
 
 ## How to overwrite messages ?
 
-You can customize the messages by including your own JSON labels
+You can customize the messages by including your own labels inside the messages props
 
 ## License
 
