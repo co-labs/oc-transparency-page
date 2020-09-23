@@ -17,7 +17,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
+var styles = {"title":"_2KezC","header__logo":"_1XkLR"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
