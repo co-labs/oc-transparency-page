@@ -6,6 +6,11 @@
   "license": "MIT",
   "repository": "co-labs/oc-transparency-page",
   "main": "dist/index.js",
+  "lang": "src/langs",
+  "supportedLocales" : [
+    "en",
+    "fr"
+  ],
   "module": "dist/index.modern.js",
   "source": "src/index.js",
   "engines": {
@@ -49,5 +54,17 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@apollo/client": "^3.1.4",
+    "@material-ui/core": "^4.11.0",
+    "chart.js": "^2.9.3",
+    "graphql": "^15.3.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.0",
+    "prop-types": "^15.7.2",
+    "react-chartjs-2": "^2.10.0",
+    "react-datepicker": "^3.1.3",
+    "react-intl": "^5.8.0"
+  }
 }

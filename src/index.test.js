@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { TransparencyPage } from '.'
 
-describe('ExampleComponent', () => {
+describe('TransparencyPage', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(TransparencyPage).toBeTruthy()
   })
 })
