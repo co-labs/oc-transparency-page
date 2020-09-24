@@ -8,7 +8,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
  * An Open Collective Api Key is highly recommended
  * @type {string}
  */
-const apiKey = '9e8e9328c1bb3cbfb9bf460dacef5e18bd7b87d8'
+const apiKey = ''
 
 const client = new ApolloClient({
   uri: 'https://api.opencollective.com/graphql/v2/' + apiKey,
