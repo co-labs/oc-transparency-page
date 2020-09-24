@@ -6,6 +6,9 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import { orderBy } from 'lodash'
 import generateRainbow from './utils/generateRainbow'
+import BarChart from './components/BarChart'
+import ExpensesTable from './components/ExpensesTable'
+import PieChart from './components/PieChart'
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -69,10 +72,7 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
 
   const account = data.account
 
-  let expenses = data.expenses.nodes
-
-  const periods = []
-  const cats = []
+  const expenses = data.expenses.nodes
 
   fetchMore({
     variables: {
@@ -90,54 +90,6 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
   }).then((res) => {
     console.log('Res', res)
   })
-
-  console.log('Count', expenses.length)
-
-  expenses = orderBy(expenses, (item) => item.createdAt)
-
-  expenses.map((item) => {
-    // eslint-disable-next-line new-cap
-    const month = new moment(item.createdAt).format('MM/YYYY')
-
-    let monthKey = periods.findIndex((i) => i === month)
-
-    if (monthKey === -1) {
-      monthKey = periods.push(month)
-    }
-
-    let catKey = cats.findIndex((i) => i.label === item.tags[0])
-
-    if (catKey === -1) {
-      if (typeof item.tags[0] !== 'undefined') {
-        catKey = cats.push({
-          label: item.tags[0],
-          data: [],
-          backgroundColor: null,
-          borderColor: null,
-          borderWidth: 1,
-          stack: 'default'
-        })
-
-        catKey = catKey - 1
-
-        cats[catKey].backgroundColor = generateRainbow(12, catKey + 1)
-        cats[catKey].borderColor = generateRainbow(12, catKey + 1)
-      }
-    }
-
-    if (typeof cats[catKey] !== 'undefined') {
-      if (typeof cats[catKey].data[monthKey] === 'undefined') {
-        cats[catKey].data[monthKey] = 0
-      }
-
-      cats[catKey].data[monthKey] += item.amount / 100
-    }
-  })
-
-  const formattedBarData = {
-    labels: periods,
-    datasets: cats
-  }
 
   if (!messages) {
     messages = {}
@@ -164,14 +116,9 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
               }}
             />
           </h2>
-          <Bar
-            data={formattedBarData}
-            width={width}
-            height={height}
-            options={{
-              maintainAspectRatio: true
-            }}
-          />
+          <BarChart expenses={expenses} width={width} height={height} />
+          <PieChart expenses={expenses} width={width} height={height} />
+          <ExpensesTable expenses={expenses} width={width} height={height} />
         </div>
       </div>
     </IntlProvider>

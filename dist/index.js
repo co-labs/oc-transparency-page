@@ -7,6 +7,22 @@ var reactChartjs2 = require('react-chartjs-2');
 var reactIntl = require('react-intl');
 var moment = _interopDefault(require('moment'));
 var lodash = require('lodash');
+var PropTypes = _interopDefault(require('prop-types'));
+var styles$1 = require('@material-ui/core/styles');
+var Table = _interopDefault(require('@material-ui/core/Table'));
+var TableBody = _interopDefault(require('@material-ui/core/TableBody'));
+var TableCell = _interopDefault(require('@material-ui/core/TableCell'));
+var TableContainer = _interopDefault(require('@material-ui/core/TableContainer'));
+var TableHead = _interopDefault(require('@material-ui/core/TableHead'));
+var TableRow = _interopDefault(require('@material-ui/core/TableRow'));
+var TableFooter = _interopDefault(require('@material-ui/core/TableFooter'));
+var TablePagination = _interopDefault(require('@material-ui/core/TablePagination'));
+var Paper = _interopDefault(require('@material-ui/core/Paper'));
+var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
+var FirstPageIcon = _interopDefault(require('@material-ui/icons/FirstPage'));
+var KeyboardArrowLeft = _interopDefault(require('@material-ui/icons/KeyboardArrowLeft'));
+var KeyboardArrowRight = _interopDefault(require('@material-ui/icons/KeyboardArrowRight'));
+var LastPageIcon = _interopDefault(require('@material-ui/icons/LastPage'));
 
 function _taggedTemplateLiteralLoose(strings, raw) {
   if (!raw) {
@@ -17,7 +33,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"title":"_2KezC","header__logo":"_1XkLR"};
+var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -67,6 +83,262 @@ var generateRainbow = (function (numOfSteps, step) {
   return "#" + ("00" + (~~(r * 255)).toString(16)).slice(-2) + ("00" + (~~(g * 255)).toString(16)).slice(-2) + ("00" + (~~(b * 255)).toString(16)).slice(-2);
 });
 
+var BarChart = function BarChart(_ref) {
+  var expenses = _ref.expenses,
+      width = _ref.width,
+      height = _ref.height;
+  var periods = [];
+  var cats = [];
+  console.log('Count', expenses.length);
+  expenses = lodash.orderBy(expenses, function (item) {
+    return item.createdAt;
+  });
+  expenses.map(function (item) {
+    var month = new moment(item.createdAt).format('MM/YYYY');
+    var monthKey = periods.findIndex(function (i) {
+      return i === month;
+    });
+
+    if (monthKey === -1) {
+      monthKey = periods.push(month);
+      monthKey--;
+    }
+
+    console.log('Month', monthKey);
+    var catKey = cats.findIndex(function (i) {
+      return i.label === item.tags[0];
+    });
+
+    if (catKey === -1) {
+      if (typeof item.tags[0] !== 'undefined') {
+        catKey = cats.push({
+          label: item.tags[0],
+          data: [],
+          backgroundColor: null,
+          borderColor: null,
+          borderWidth: 1,
+          stack: 'default'
+        });
+        catKey = catKey - 1;
+      }
+    }
+
+    if (typeof cats[catKey] === 'undefined') {
+      cats[catKey] = {};
+    }
+
+    if (typeof cats[catKey] !== 'undefined') {
+      if (typeof cats[catKey].data[monthKey] === 'undefined') {
+        cats[catKey].data[monthKey] = 0;
+      }
+
+      cats[catKey].data[monthKey] += item.amount / 100;
+    }
+  });
+  cats.map(function (i, k) {
+    cats[k].backgroundColor = generateRainbow(cats.length, k);
+    cats[k].borderColor = generateRainbow(cats.length, k);
+  });
+  var formattedData = {
+    labels: periods,
+    datasets: cats
+  };
+  return /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
+    data: formattedData,
+    width: width,
+    height: height,
+    options: {
+      maintainAspectRatio: true
+    }
+  });
+};
+
+var useStyles1 = styles$1.makeStyles(function (theme) {
+  return {
+    root: {
+      flexShrink: 0,
+      marginLeft: theme.spacing(2.5)
+    }
+  };
+});
+
+function TablePaginationActions(props) {
+  var classes = useStyles1();
+  var theme = styles$1.useTheme();
+  var count = props.count,
+      page = props.page,
+      rowsPerPage = props.rowsPerPage,
+      onChangePage = props.onChangePage;
+
+  var handleFirstPageButtonClick = function handleFirstPageButtonClick(event) {
+    onChangePage(event, 0);
+  };
+
+  var handleBackButtonClick = function handleBackButtonClick(event) {
+    onChangePage(event, page - 1);
+  };
+
+  var handleNextButtonClick = function handleNextButtonClick(event) {
+    onChangePage(event, page + 1);
+  };
+
+  var handleLastPageButtonClick = function handleLastPageButtonClick(event) {
+    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: classes.root
+  }, /*#__PURE__*/React__default.createElement(IconButton, {
+    onClick: handleFirstPageButtonClick,
+    disabled: page === 0,
+    "aria-label": "first page"
+  }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(LastPageIcon, null) : /*#__PURE__*/React__default.createElement(FirstPageIcon, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    onClick: handleBackButtonClick,
+    disabled: page === 0,
+    "aria-label": "previous page"
+  }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(KeyboardArrowRight, null) : /*#__PURE__*/React__default.createElement(KeyboardArrowLeft, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    onClick: handleNextButtonClick,
+    disabled: page >= Math.ceil(count / rowsPerPage) - 1,
+    "aria-label": "next page"
+  }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(KeyboardArrowLeft, null) : /*#__PURE__*/React__default.createElement(KeyboardArrowRight, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    onClick: handleLastPageButtonClick,
+    disabled: page >= Math.ceil(count / rowsPerPage) - 1,
+    "aria-label": "last page"
+  }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(FirstPageIcon, null) : /*#__PURE__*/React__default.createElement(LastPageIcon, null)));
+}
+
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired
+};
+
+var ExpensesTable = function ExpensesTable(_ref) {
+  var expenses = _ref.expenses;
+  var rows = expenses;
+
+  var _React$useState = React__default.useState(0),
+      page = _React$useState[0],
+      setPage = _React$useState[1];
+
+  var _React$useState2 = React__default.useState(5),
+      rowsPerPage = _React$useState2[0],
+      setRowsPerPage = _React$useState2[1];
+
+  var handleChangePage = function handleChangePage(event, newPage) {
+    setPage(newPage);
+  };
+
+  var handleChangeRowsPerPage = function handleChangeRowsPerPage(event) {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  var emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  return /*#__PURE__*/React__default.createElement(TableContainer, {
+    component: Paper
+  }, /*#__PURE__*/React__default.createElement(Table, {
+    "aria-label": "simple table"
+  }, /*#__PURE__*/React__default.createElement(TableHead, null, /*#__PURE__*/React__default.createElement(TableRow, null, /*#__PURE__*/React__default.createElement(TableCell, {
+    align: "left"
+  }, "Description"), /*#__PURE__*/React__default.createElement(TableCell, {
+    align: "left"
+  }, "Amount"), /*#__PURE__*/React__default.createElement(TableCell, {
+    align: "right"
+  }, "Status"), /*#__PURE__*/React__default.createElement(TableCell, {
+    align: "right"
+  }, "Tags"))), /*#__PURE__*/React__default.createElement(TableBody, null, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(function (row) {
+    return /*#__PURE__*/React__default.createElement(TableRow, {
+      key: row.name
+    }, /*#__PURE__*/React__default.createElement(TableCell, {
+      component: "th",
+      scope: "row"
+    }, row.description), /*#__PURE__*/React__default.createElement(TableCell, {
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.amount / 100, " ", row.currency), /*#__PURE__*/React__default.createElement(TableCell, {
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.status), /*#__PURE__*/React__default.createElement(TableCell, {
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.tags));
+  }), emptyRows > 0 && /*#__PURE__*/React__default.createElement(TableRow, {
+    style: {
+      height: 53 * emptyRows
+    }
+  }, /*#__PURE__*/React__default.createElement(TableCell, {
+    colSpan: 6
+  }))), /*#__PURE__*/React__default.createElement(TableFooter, null, /*#__PURE__*/React__default.createElement(TableRow, null, /*#__PURE__*/React__default.createElement(TablePagination, {
+    rowsPerPageOptions: [5, 10, 25, {
+      label: 'All',
+      value: -1
+    }],
+    colSpan: 3,
+    count: rows.length,
+    rowsPerPage: rowsPerPage,
+    page: page,
+    SelectProps: {
+      inputProps: {
+        'aria-label': 'rows per page'
+      },
+      "native": true
+    },
+    onChangePage: handleChangePage,
+    onChangeRowsPerPage: handleChangeRowsPerPage,
+    ActionsComponent: TablePaginationActions
+  })))));
+};
+
+var PieChart = function PieChart(_ref) {
+  var expenses = _ref.expenses;
+  var labels = [];
+  var datasets = [{
+    data: [],
+    backgroundColor: [],
+    hoverBackgroundColor: []
+  }];
+  expenses = lodash.orderBy(expenses, function (item) {
+    return item.createdAt;
+  });
+  expenses.map(function (item) {
+    var _item$tags$;
+
+    var label = (_item$tags$ = item.tags[0]) != null ? _item$tags$ : 'undefined';
+    var labelKey = labels.findIndex(function (i) {
+      return i === label;
+    });
+
+    if (labelKey === -1) {
+      labelKey = labels.push(label);
+      datasets[0].data[labelKey - 1] = item.amount / 100;
+    } else {
+      datasets[0].data[labelKey] += item.amount / 100;
+    }
+  });
+  labels.map(function (i, k) {
+    datasets[0].backgroundColor[k] = generateRainbow(labels.length, k);
+    datasets[0].hoverBackgroundColor[k] = generateRainbow(labels.length, k);
+  });
+  var formattedData = {
+    labels: labels,
+    datasets: datasets
+  };
+  return /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
+    data: formattedData,
+    options: {
+      maintainAspectRatio: true
+    }
+  });
+};
+
 function _templateObject() {
   var data = _taggedTemplateLiteralLoose(["\n  query ExpensesPage(\n    $account: AccountReferenceInput!\n    $slug: String!\n    $offset: Int!\n    $dateFrom: ISODateTime!\n  ) {\n    expenses(\n      account: $account\n      orderBy: { field: CREATED_AT, direction: ASC }\n      offset: $offset\n      limit: 100\n      status: PAID\n      dateFrom: $dateFrom\n    ) {\n      offset\n      totalCount\n      limit\n      nodes {\n        id\n        amount\n        tags\n        description\n        currency\n        status\n        createdAt\n      }\n    }\n    account(slug: $slug) {\n      id\n      imageUrl\n      name\n    }\n  }\n"]);
 
@@ -112,8 +384,6 @@ var TransparencyPage = function TransparencyPage(_ref) {
   if (error) return /*#__PURE__*/React__default.createElement("p", null, "Error :(");
   var account = data.account;
   var expenses = data.expenses.nodes;
-  var periods = [];
-  var cats = [];
   fetchMore({
     variables: {
       offset: data.expenses.nodes.length
@@ -127,52 +397,6 @@ var TransparencyPage = function TransparencyPage(_ref) {
   }).then(function (res) {
     console.log('Res', res);
   });
-  console.log('Count', expenses.length);
-  expenses = lodash.orderBy(expenses, function (item) {
-    return item.createdAt;
-  });
-  expenses.map(function (item) {
-    var month = new moment(item.createdAt).format('MM/YYYY');
-    var monthKey = periods.findIndex(function (i) {
-      return i === month;
-    });
-
-    if (monthKey === -1) {
-      monthKey = periods.push(month);
-    }
-
-    var catKey = cats.findIndex(function (i) {
-      return i.label === item.tags[0];
-    });
-
-    if (catKey === -1) {
-      if (typeof item.tags[0] !== 'undefined') {
-        catKey = cats.push({
-          label: item.tags[0],
-          data: [],
-          backgroundColor: null,
-          borderColor: null,
-          borderWidth: 1,
-          stack: 'default'
-        });
-        catKey = catKey - 1;
-        cats[catKey].backgroundColor = generateRainbow(12, catKey + 1);
-        cats[catKey].borderColor = generateRainbow(12, catKey + 1);
-      }
-    }
-
-    if (typeof cats[catKey] !== 'undefined') {
-      if (typeof cats[catKey].data[monthKey] === 'undefined') {
-        cats[catKey].data[monthKey] = 0;
-      }
-
-      cats[catKey].data[monthKey] += item.amount / 100;
-    }
-  });
-  var formattedBarData = {
-    labels: periods,
-    datasets: cats
-  };
 
   if (!messages) {
     messages = {};
@@ -202,13 +426,18 @@ var TransparencyPage = function TransparencyPage(_ref) {
     values: {
       date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
     }
-  })), /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
-    data: formattedBarData,
+  })), /*#__PURE__*/React__default.createElement(BarChart, {
+    expenses: expenses,
     width: width,
-    height: height,
-    options: {
-      maintainAspectRatio: true
-    }
+    height: height
+  }), /*#__PURE__*/React__default.createElement(PieChart, {
+    expenses: expenses,
+    width: width,
+    height: height
+  }), /*#__PURE__*/React__default.createElement(ExpensesTable, {
+    expenses: expenses,
+    width: width,
+    height: height
   }))));
 };
 
