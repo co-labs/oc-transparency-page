@@ -17,7 +17,7 @@ const client = new ApolloClient({
 
 const App = () => {
   return <ApolloProvider client={client}>
-    <TransparencyPage client={client} slug={'co-labs'}
+    <TransparencyPage client={client} slug={'xr-belgium'}
                       date={"2018-01-01"}
                       messages={{ 'allExpensesFrom': 'All expenses from {date}' }} />
   </ApolloProvider>

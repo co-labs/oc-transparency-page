@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Bar, Doughnut } from 'react-chartjs-2';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { orderBy } from 'lodash';
-import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { orderBy } from 'lodash';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -106,10 +107,6 @@ const BarChart = ({
       }
     }
 
-    if (typeof cats[catKey] === 'undefined') {
-      cats[catKey] = {};
-    }
-
     if (typeof cats[catKey] !== 'undefined') {
       if (typeof cats[catKey].data[monthKey] === 'undefined') {
         cats[catKey].data[monthKey] = 0;
@@ -128,8 +125,6 @@ const BarChart = ({
   };
   return /*#__PURE__*/React.createElement(Bar, {
     data: formattedData,
-    width: width,
-    height: height,
     options: {
       maintainAspectRatio: true
     }
@@ -316,6 +311,18 @@ const PieChart = ({
 
 let _ = t => t,
     _t;
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing(2)
+  }
+}));
 const ALL_EXPENSES = gql(_t || (_t = _`
   query ExpensesPage(
     $account: AccountReferenceInput!
@@ -358,6 +365,7 @@ const TransparencyPage = ({
   messages,
   date
 }) => {
+  const classes = useStyles();
   const [width] = useState(800);
   const [height] = useState(300);
   const offset = 0;
@@ -424,15 +432,25 @@ const TransparencyPage = ({
     values: {
       date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
     }
-  })), /*#__PURE__*/React.createElement(BarChart, {
+  })), /*#__PURE__*/React.createElement(Grid, {
+    container: true,
+    className: classes.root,
+    spacing: 2
+  }, /*#__PURE__*/React.createElement(Grid, {
+    item: true,
+    xs: 8
+  }, /*#__PURE__*/React.createElement(BarChart, {
     expenses: expenses,
     width: width,
     height: height
-  }), /*#__PURE__*/React.createElement(PieChart, {
+  })), /*#__PURE__*/React.createElement(Grid, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/React.createElement(PieChart, {
     expenses: expenses,
     width: width,
     height: height
-  }), /*#__PURE__*/React.createElement(ExpensesTable, {
+  }))), /*#__PURE__*/React.createElement(ExpensesTable, {
     expenses: expenses,
     width: width,
     height: height

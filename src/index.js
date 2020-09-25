@@ -1,14 +1,26 @@
 import React, { useState } from 'react'
 import styles from './styles.module.css'
 import { useQuery, gql } from '@apollo/client'
-import { Bar } from 'react-chartjs-2'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import moment from 'moment'
-import { orderBy } from 'lodash'
-import generateRainbow from './utils/generateRainbow'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
 import PieChart from './components/PieChart'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -52,6 +64,7 @@ const ALL_EXPENSES = gql`
  * @constructor
  */
 const TransparencyPage = ({ slug, locale, messages, date }) => {
+  const classes = useStyles();
   const [width] = useState(800)
   const [height] = useState(300)
   const offset = 0
@@ -116,8 +129,14 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
               }}
             />
           </h2>
-          <BarChart expenses={expenses} width={width} height={height} />
-          <PieChart expenses={expenses} width={width} height={height} />
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={8}>
+              <BarChart expenses={expenses} width={width} height={height} />
+            </Grid>
+            <Grid item xs={4}>
+              <PieChart expenses={expenses} width={width} height={height} />
+            </Grid>
+          </Grid>
           <ExpensesTable expenses={expenses} width={width} height={height} />
         </div>
       </div>

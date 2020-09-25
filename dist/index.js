@@ -3,12 +3,13 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 var client = require('@apollo/client');
-var reactChartjs2 = require('react-chartjs-2');
 var reactIntl = require('react-intl');
 var moment = _interopDefault(require('moment'));
-var lodash = require('lodash');
-var PropTypes = _interopDefault(require('prop-types'));
 var styles$1 = require('@material-ui/core/styles');
+var Grid = _interopDefault(require('@material-ui/core/Grid'));
+var lodash = require('lodash');
+var reactChartjs2 = require('react-chartjs-2');
+var PropTypes = _interopDefault(require('prop-types'));
 var Table = _interopDefault(require('@material-ui/core/Table'));
 var TableBody = _interopDefault(require('@material-ui/core/TableBody'));
 var TableCell = _interopDefault(require('@material-ui/core/TableCell'));
@@ -84,9 +85,7 @@ var generateRainbow = (function (numOfSteps, step) {
 });
 
 var BarChart = function BarChart(_ref) {
-  var expenses = _ref.expenses,
-      width = _ref.width,
-      height = _ref.height;
+  var expenses = _ref.expenses;
   var periods = [];
   var cats = [];
   console.log('Count', expenses.length);
@@ -123,10 +122,6 @@ var BarChart = function BarChart(_ref) {
       }
     }
 
-    if (typeof cats[catKey] === 'undefined') {
-      cats[catKey] = {};
-    }
-
     if (typeof cats[catKey] !== 'undefined') {
       if (typeof cats[catKey].data[monthKey] === 'undefined') {
         cats[catKey].data[monthKey] = 0;
@@ -145,8 +140,6 @@ var BarChart = function BarChart(_ref) {
   };
   return /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
     data: formattedData,
-    width: width,
-    height: height,
     options: {
       maintainAspectRatio: true
     }
@@ -348,6 +341,20 @@ function _templateObject() {
 
   return data;
 }
+var useStyles = styles$1.makeStyles(function (theme) {
+  return {
+    root: {
+      flexGrow: 1
+    },
+    paper: {
+      height: 140,
+      width: 100
+    },
+    control: {
+      padding: theme.spacing(2)
+    }
+  };
+});
 var ALL_EXPENSES = client.gql(_templateObject());
 
 var TransparencyPage = function TransparencyPage(_ref) {
@@ -355,6 +362,7 @@ var TransparencyPage = function TransparencyPage(_ref) {
       locale = _ref.locale,
       messages = _ref.messages,
       date = _ref.date;
+  var classes = useStyles();
 
   var _useState = React.useState(800),
       width = _useState[0];
@@ -426,15 +434,25 @@ var TransparencyPage = function TransparencyPage(_ref) {
     values: {
       date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
     }
-  })), /*#__PURE__*/React__default.createElement(BarChart, {
+  })), /*#__PURE__*/React__default.createElement(Grid, {
+    container: true,
+    className: classes.root,
+    spacing: 2
+  }, /*#__PURE__*/React__default.createElement(Grid, {
+    item: true,
+    xs: 8
+  }, /*#__PURE__*/React__default.createElement(BarChart, {
     expenses: expenses,
     width: width,
     height: height
-  }), /*#__PURE__*/React__default.createElement(PieChart, {
+  })), /*#__PURE__*/React__default.createElement(Grid, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/React__default.createElement(PieChart, {
     expenses: expenses,
     width: width,
     height: height
-  }), /*#__PURE__*/React__default.createElement(ExpensesTable, {
+  }))), /*#__PURE__*/React__default.createElement(ExpensesTable, {
     expenses: expenses,
     width: width,
     height: height

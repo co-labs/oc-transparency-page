@@ -43,10 +43,6 @@ const BarChart = ({ expenses, width, height }) => {
       }
     }
 
-    if (typeof cats[catKey] === 'undefined') {
-      cats[catKey] = {}
-    }
-
     if (typeof cats[catKey] !== 'undefined') {
       if (typeof cats[catKey].data[monthKey] === 'undefined') {
         cats[catKey].data[monthKey] = 0
@@ -69,8 +65,6 @@ const BarChart = ({ expenses, width, height }) => {
   return (
     <Bar
       data={formattedData}
-      width={width}
-      height={height}
       options={{
         maintainAspectRatio: true
       }}
