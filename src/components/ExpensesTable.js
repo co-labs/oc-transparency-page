@@ -93,6 +93,14 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired
 }
 
+/**
+ * ExpensesTable formatter
+ * @param expenses
+ * @param width
+ * @param height
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ExpensesTable = ({ expenses, width, height }) => {
   const rows = expenses
   const [page, setPage] = React.useState(0)

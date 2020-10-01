@@ -8,6 +8,9 @@ import Grid from '@material-ui/core/Grid'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
 import PieChart from './components/PieChart'
+export BarChart from './components/BarChart'
+export ExpensesTable from './components/ExpensesTable'
+export PieChart from './components/PieChart'
 
 const useStyles = makeStyles((theme) => ({
   root: {

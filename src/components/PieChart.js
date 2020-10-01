@@ -3,6 +3,14 @@ import { orderBy } from 'lodash'
 import generateRainbow from '../utils/generateRainbow'
 import { Doughnut } from 'react-chartjs-2'
 
+/**
+ * Format a PieChart with the OpenCollective expenses data
+ * @param expenses
+ * @param width
+ * @param height
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const PieChart = ({ expenses, width, height }) => {
   const labels = []
   const datasets = [
