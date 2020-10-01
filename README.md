@@ -2,7 +2,7 @@
 
 > A React Component to integrate a transparency page of your collective into your project
 
-[![NPM](https://img.shields.io/npm/v/oc-transparency-page.svg)](https://www.npmjs.com/package/oc-transparency-page) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/oc-transparency-page.svg)](https://www.npmjs.com/package/@co-labs/oc-transparency-page) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
