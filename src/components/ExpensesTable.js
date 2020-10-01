@@ -107,7 +107,8 @@ const ExpensesTable = ({ expenses, width, height }) => {
     setPage(0)
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
   return (
     <TableContainer component={Paper}>
@@ -125,7 +126,7 @@ const ExpensesTable = ({ expenses, width, height }) => {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component='th' scope='row'>
                 {row.description}
               </TableCell>

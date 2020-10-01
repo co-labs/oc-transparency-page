@@ -11,16 +11,16 @@ import PieChart from './components/PieChart'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     height: 140,
-    width: 100,
+    width: 100
   },
   control: {
-    padding: theme.spacing(2),
-  },
-}));
+    padding: theme.spacing(2)
+  }
+}))
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -64,7 +64,7 @@ const ALL_EXPENSES = gql`
  * @constructor
  */
 const TransparencyPage = ({ slug, locale, messages, date }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   const [width] = useState(800)
   const [height] = useState(300)
   const offset = 0

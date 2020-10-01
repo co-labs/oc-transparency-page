@@ -34,7 +34,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"title":"_2KezC","header__logo":"_1XkLR"};
+var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -243,7 +243,7 @@ var ExpensesTable = function ExpensesTable(_ref) {
     align: "right"
   }, "Tags"))), /*#__PURE__*/React__default.createElement(TableBody, null, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(function (row) {
     return /*#__PURE__*/React__default.createElement(TableRow, {
-      key: row.name
+      key: row.id
     }, /*#__PURE__*/React__default.createElement(TableCell, {
       component: "th",
       scope: "row"
