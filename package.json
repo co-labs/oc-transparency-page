@@ -1,6 +1,6 @@
 {
   "name": "@co-labs/oc-transparency-page",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React Component to show Open Collective page into your project",
   "author": "co-labs",
   "license": "MIT",
