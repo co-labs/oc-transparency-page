@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save oc-transparency-page
+npm i @co-labs/oc-transparency-page
 ```
 
 ## Usage
