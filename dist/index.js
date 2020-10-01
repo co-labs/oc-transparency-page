@@ -34,7 +34,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
+var styles = {"title":"_2KezC","header__logo":"_1XkLR"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -88,7 +88,6 @@ var BarChart = function BarChart(_ref) {
   var expenses = _ref.expenses;
   var periods = [];
   var cats = [];
-  console.log('Count', expenses.length);
   expenses = lodash.orderBy(expenses, function (item) {
     return item.createdAt;
   });
