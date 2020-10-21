@@ -51,7 +51,9 @@ const PieChart = ({ expenses, width, height }) => {
     <Doughnut
       data={formattedData}
       options={{
-        maintainAspectRatio: true
+        maintainAspectRatio: true,
+        aspectRatio: 1,
+        responsive: true
       }}
     />
   )

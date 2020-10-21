@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
+import { ResponsiveContainer } from 'recharts'
 import PieChart from './components/PieChart'
 
 const useStyles = makeStyles((theme) => ({
@@ -119,7 +120,7 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
           <img className={styles.header__logo} src={account.imageUrl} alt='' />
           {account.name}
         </h1>
-        <div className='content'>
+        <div className='content' style={{ position: 'relative' }}>
           <h2>
             <FormattedMessage
               id='allExpensesFrom'
@@ -130,11 +131,25 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
             />
           </h2>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item lg={8}>
-              <BarChart expenses={expenses} width={width} height={height} />
+            <Grid
+              item
+              xs={12}
+              sm={8}
+              md={8}
+              lg={8}
+              style={{ position: 'relative', minHeight: 100, minWidth: 300 }}
+            >
+              <BarChart expenses={expenses} />
             </Grid>
-            <Grid item lg={4}>
-              <PieChart expenses={expenses} width={width} height={height} />
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              md={4}
+              lg={4}
+              style={{ position: 'relative', minHeight: 500, minWidth: 500 }}
+            >
+              <PieChart expenses={expenses} />
             </Grid>
           </Grid>
           <ExpensesTable expenses={expenses} width={width} height={height} />

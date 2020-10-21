@@ -72,6 +72,7 @@ const BarChart = ({ expenses, width, height }) => {
     <Bar
       data={formattedData}
       options={{
+        responsive: true,
         maintainAspectRatio: true
       }}
     />
