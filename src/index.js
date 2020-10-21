@@ -130,10 +130,10 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
             />
           </h2>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={8}>
+            <Grid item lg={8}>
               <BarChart expenses={expenses} width={width} height={height} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4}>
               <PieChart expenses={expenses} width={width} height={height} />
             </Grid>
           </Grid>
