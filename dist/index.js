@@ -172,7 +172,8 @@ var BarChart = function BarChart(_ref) {
     data: formattedData,
     options: {
       responsive: true,
-      maintainAspectRatio: true
+      maintainAspectRatio: true,
+      aspectRatio: 2
     }
   });
 };
