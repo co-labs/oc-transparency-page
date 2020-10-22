@@ -121,7 +121,7 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
           {account.name}
         </h1>
         <div className='content' style={{ position: 'relative' }}>
-          <h2>
+          {/* <h2>
             <FormattedMessage
               id='allExpensesFrom'
               defaultMessage='All expenses from {date}'
@@ -129,7 +129,7 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
                 date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
               }}
             />
-          </h2>
+          </h2> */}
           <Grid container className={classes.root} spacing={2}>
             <Grid
               item
