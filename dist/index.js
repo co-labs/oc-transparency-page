@@ -4,10 +4,10 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var client = require('@apollo/client');
 var reactIntl = require('react-intl');
-var moment = _interopDefault(require('moment'));
 var styles$1 = require('@material-ui/core/styles');
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var lodash = require('lodash');
+var moment = _interopDefault(require('moment'));
 var reactChartjs2 = require('react-chartjs-2');
 var PropTypes = _interopDefault(require('prop-types'));
 var Table = _interopDefault(require('@material-ui/core/Table'));
@@ -24,7 +24,6 @@ var FirstPageIcon = _interopDefault(require('@material-ui/icons/FirstPage'));
 var KeyboardArrowLeft = _interopDefault(require('@material-ui/icons/KeyboardArrowLeft'));
 var KeyboardArrowRight = _interopDefault(require('@material-ui/icons/KeyboardArrowRight'));
 var LastPageIcon = _interopDefault(require('@material-ui/icons/LastPage'));
-require('recharts');
 
 function _taggedTemplateLiteralLoose(strings, raw) {
   if (!raw) {
@@ -35,7 +34,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"title":"_2KezC","header__logo":"_1XkLR"};
+var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -423,14 +422,16 @@ var TransparencyPage = function TransparencyPage(_ref) {
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React__default.createElement("div", {
-    className: styles.title
-  }, /*#__PURE__*/React__default.createElement("h1", {
-    className: "header"
+    className: styles.container
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "logo"
   }, /*#__PURE__*/React__default.createElement("img", {
     className: styles.header__logo,
     src: account.imageUrl,
     alt: ""
-  }), account.name), /*#__PURE__*/React__default.createElement("div", {
+  })), /*#__PURE__*/React__default.createElement("h1", {
+    className: "title"
+  }, account.name), /*#__PURE__*/React__default.createElement("div", {
     className: "content",
     style: {
       position: 'relative'
@@ -442,20 +443,20 @@ var TransparencyPage = function TransparencyPage(_ref) {
   }, /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
     xs: 12,
-    sm: 8,
+    sm: 12,
     md: 8,
     lg: 8,
     style: {
       position: 'relative',
       minHeight: 100,
-      minWidth: 300
+      minWidth: 500
     }
   }, /*#__PURE__*/React__default.createElement(BarChart, {
     expenses: expenses
   })), /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
     xs: 12,
-    sm: 4,
+    sm: 12,
     md: 4,
     lg: 4,
     style: {

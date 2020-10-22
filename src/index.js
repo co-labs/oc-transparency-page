@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import styles from './styles.module.css'
 import { useQuery, gql } from '@apollo/client'
-import { IntlProvider, FormattedMessage } from 'react-intl'
-import moment from 'moment'
+import { IntlProvider } from 'react-intl'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
-import { ResponsiveContainer } from 'recharts'
 import PieChart from './components/PieChart'
 
 const useStyles = makeStyles((theme) => ({
@@ -115,11 +113,11 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
 
   return (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <div className={styles.title}>
-        <h1 className='header'>
+      <div className={styles.container}>
+        <div className='logo'>
           <img className={styles.header__logo} src={account.imageUrl} alt='' />
-          {account.name}
-        </h1>
+        </div>
+        <h1 className='title'>{account.name}</h1>
         <div className='content' style={{ position: 'relative' }}>
           {/* <h2>
             <FormattedMessage
@@ -134,17 +132,17 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
             <Grid
               item
               xs={12}
-              sm={8}
+              sm={12}
               md={8}
               lg={8}
-              style={{ position: 'relative', minHeight: 100, minWidth: 300 }}
+              style={{ position: 'relative', minHeight: 100, minWidth: 500 }}
             >
               <BarChart expenses={expenses} />
             </Grid>
             <Grid
               item
               xs={12}
-              sm={4}
+              sm={12}
               md={4}
               lg={4}
               style={{ position: 'relative', minHeight: 500, minWidth: 500 }}
