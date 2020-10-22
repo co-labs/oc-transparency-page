@@ -34,7 +34,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
+var styles = {"container":"_1Lxpd","title":"_2KezC","logo":"_Lw2P8"};
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
