@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core/styles'
+import { useStyles } from '../theme'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -16,15 +17,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
 
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5)
-  }
-}))
-
 function TablePaginationActions(props) {
-  const classes = useStyles1()
+  const classes = useStyles()
   const theme = useTheme()
   const { count, page, rowsPerPage, onChangePage } = props
 
@@ -45,8 +39,9 @@ function TablePaginationActions(props) {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.pagination}>
       <IconButton
+        className={classes.pagination__first}
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
         aria-label='first page'
@@ -54,6 +49,7 @@ function TablePaginationActions(props) {
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
+        className={classes.pagination__prev}
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label='previous page'
@@ -65,6 +61,7 @@ function TablePaginationActions(props) {
         )}
       </IconButton>
       <IconButton
+        className={classes.pagination__next}
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='next page'
@@ -76,6 +73,7 @@ function TablePaginationActions(props) {
         )}
       </IconButton>
       <IconButton
+        className={classes.pagination__last}
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='last page'
@@ -102,9 +100,10 @@ TablePaginationActions.propTypes = {
  * @constructor
  */
 const ExpensesTable = ({ expenses, width, height }) => {
+  const classes = useStyles()
   const rows = expenses
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -119,48 +118,48 @@ const ExpensesTable = ({ expenses, width, height }) => {
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell align='left'>Description</TableCell>
-            <TableCell align='left'>Amount</TableCell>
-            <TableCell align='right'>Status</TableCell>
-            <TableCell align='right'>Tags</TableCell>
+    <TableContainer className={classes['table-container']} component={Paper}>
+      <Table className={classes.table} aria-label='simple table'>
+        <TableHead className={classes.table__head}>
+          <TableRow className={classes.table__head__row}>
+            <TableCell className={classes.table__head__row__cell} align='left'>Description</TableCell>
+            <TableCell className={classes.table__head__row__cell} align='left'>Amount</TableCell>
+            <TableCell className={classes.table__head__row__cell} align='right'>Status</TableCell>
+            <TableCell className={classes.table__head__row__cell} align='right'>Tags</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className={classes.table__body}>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component='th' scope='row'>
+            <TableRow className={classes.table__body__row} key={row.id}>
+              <TableCell className={classes.table__body__row__cell} component='th' scope='row'>
                 {row.description}
               </TableCell>
-              <TableCell style={{ width: 160 }} align='right'>
+              <TableCell className={classes.table__body__row__cell} style={{ width: 160 }} align='right'>
                 {row.amount / 100} {row.currency}
               </TableCell>
-              <TableCell style={{ width: 160 }} align='right'>
+              <TableCell className={classes.table__body__row__cell} style={{ width: 160 }} align='right'>
                 {row.status}
               </TableCell>
-              <TableCell style={{ width: 160 }} align='right'>
+              <TableCell className={classes.table__body__row__cell} style={{ width: 160 }} align='right'>
                 {row.tags}
               </TableCell>
             </TableRow>
           ))}
 
           {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            <TableRow className={classes.table__body__row} style={{ height: 53 * emptyRows }}>
+              <TableCell className={classes.table__body__row__cell} colSpan={6} />
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
+        <TableFooter className={classes.table__footer}>
+          <TableRow className={classes.table__footer__row}>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
+              colSpan={4}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}

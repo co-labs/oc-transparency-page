@@ -10,6 +10,10 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
  */
 const apiKey = localStorage.getItem('apiKey')
 
+if (!apiKey) {
+  console.error('Missing API Key!')
+}
+
 const client = new ApolloClient({
   uri: 'https://api.opencollective.com/graphql/v2/' + apiKey,
   cache: new InMemoryCache()
@@ -18,7 +22,7 @@ const client = new ApolloClient({
 const App = () => {
   return <ApolloProvider client={client}>
     <TransparencyPage client={client} slug={'xr-belgium'}
-                      date={"2018-01-01"}
+                      date={'2018-01-01'}
                       messages={{ 'allExpensesFrom': 'All expenses from {date}' }} />
   </ApolloProvider>
 }

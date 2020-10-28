@@ -1,26 +1,13 @@
 import React, { useState } from 'react'
-import styles from './styles.module.css'
 import { useQuery, gql } from '@apollo/client'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import moment from 'moment'
-import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
+import { useStyles } from './theme'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
 import PieChart from './components/PieChart'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 140,
-    width: 100
-  },
-  control: {
-    padding: theme.spacing(2)
-  }
-}))
+import { useWindowSize } from "./utils/useWindowSize";
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -57,6 +44,7 @@ const ALL_EXPENSES = gql`
     }
   }
 `
+
 /**
  * Transparency page component
  * @param slug The account slug
@@ -65,8 +53,7 @@ const ALL_EXPENSES = gql`
  */
 const TransparencyPage = ({ slug, locale, messages, date }) => {
   const classes = useStyles()
-  const [width] = useState(800)
-  const [height] = useState(300)
+  const [width, height] = useWindowSize()
   const offset = 0
   const dateFrom = useState(date ?? '2001-01-01')
   /**
@@ -80,11 +67,11 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
       dateFrom
     }
   })
+
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
 
   const account = data.account
-
   const expenses = data.expenses.nodes
 
   fetchMore({
@@ -114,13 +101,15 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
 
   return (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <div className={styles.title}>
-        <h1 className='header'>
-          <img className={styles.header__logo} src={account.imageUrl} alt='' />
-          {account.name}
-        </h1>
-        <div className='content'>
-          <h2>
+      <div className={classes.wrapper}>
+        <div className={classes.header}>
+          <h1 className={classes.header__title}>
+            <img className={classes.header__logo} src={account.imageUrl} alt='' />
+            {account.name}
+          </h1>
+        </div>
+        <div className={classes.body}>
+          <h2 className={classes.body__title}>
             <FormattedMessage
               id='allExpensesFrom'
               defaultMessage='All expenses from {date}'
@@ -129,15 +118,17 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
               }}
             />
           </h2>
-          <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={8}>
+          <Grid className={classes.charts} container spacing={5}>
+            <Grid className={classes.charts__bar} item xs={12} md={8}>
               <BarChart expenses={expenses} width={width} height={height} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid className={classes.charts__pie} item xs={12} md={4}>
               <PieChart expenses={expenses} width={width} height={height} />
             </Grid>
+            <Grid className={classes.charts__table} item xs={12}>
+              <ExpensesTable expenses={expenses} width={width} height={height} />
+            </Grid>
           </Grid>
-          <ExpensesTable expenses={expenses} width={width} height={height} />
         </div>
       </div>
     </IntlProvider>
