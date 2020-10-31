@@ -22,73 +22,82 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-const useStyles = makeStyles(theme => ({
-  body: {},
-  body__title: {
-    fontSize: '1.5em',
-    textAlign: 'center',
-    [theme.breakpoints.down('xs')]: {
+function _taggedTemplateLiteralLoose(strings, raw) {
+  if (!raw) {
+    raw = strings.slice(0);
+  }
+
+  strings.raw = raw;
+  return strings;
+}
+
+var useStyles = makeStyles(function (theme) {
+  var _body__title, _header__title, _table__head__row__ce, _table__body__row__ce;
+
+  return {
+    body: {},
+    body__title: (_body__title = {
+      fontSize: '1.5em',
+      textAlign: 'center'
+    }, _body__title[theme.breakpoints.down('xs')] = {
       fontSize: '1.2em'
-    }
-  },
-  charts: {
-    flexGrow: 1
-  },
-  charts__bar: {},
-  charts__pie: {},
-  charts__table: {},
-  header: {
-    padding: '.5em',
-    textAlign: 'center'
-  },
-  header__logo: {
-    height: '1em !important'
-  },
-  header__title: {
-    fontSize: '2em',
-    [theme.breakpoints.down('xs')]: {
+    }, _body__title),
+    charts: {
+      flexGrow: 1
+    },
+    charts__bar: {},
+    charts__pie: {},
+    charts__table: {},
+    header: {
+      padding: '.5em',
+      textAlign: 'center'
+    },
+    header__logo: {
+      height: '1em !important'
+    },
+    header__title: (_header__title = {
+      fontSize: '2em'
+    }, _header__title[theme.breakpoints.down('xs')] = {
       fontSize: '1.6em'
-    }
-  },
-  pagination: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5)
-  },
-  pagination__first: {},
-  pagination__prev: {},
-  pagination__next: {},
-  pagination__last: {},
-  table: {},
-  table__head: {},
-  table__head__row: {},
-  table__head__row__cell: {
-    fontSize: '1em',
-    [theme.breakpoints.down('xs')]: {
+    }, _header__title),
+    pagination: {
+      flexShrink: 0,
+      marginLeft: theme.spacing(2.5)
+    },
+    pagination__first: {},
+    pagination__prev: {},
+    pagination__next: {},
+    pagination__last: {},
+    table: {},
+    table__head: {},
+    table__head__row: {},
+    table__head__row__cell: (_table__head__row__ce = {
+      fontSize: '1em'
+    }, _table__head__row__ce[theme.breakpoints.down('xs')] = {
       fontSize: '.8em',
       padding: 10
-    }
-  },
-  table__body: {},
-  table__body__row: {},
-  table__body__row__cell: {
-    fontSize: '.9em',
-    [theme.breakpoints.down('xs')]: {
+    }, _table__head__row__ce),
+    table__body: {},
+    table__body__row: {},
+    table__body__row__cell: (_table__body__row__ce = {
+      fontSize: '.9em'
+    }, _table__body__row__ce[theme.breakpoints.down('xs')] = {
       fontSize: '.7em',
       padding: 10
-    }
-  },
-  table__footer: {},
-  table__footer__row: {},
-  'table-container': {},
-  wrapper: {}
-}));
+    }, _table__body__row__ce),
+    table__footer: {},
+    table__footer__row: {},
+    'table-container': {},
+    wrapper: {}
+  };
+});
 
-var generateRainbow = ((numOfSteps, step) => {
-  let r, g, b;
-  const h = step / numOfSteps;
-  const i = ~~(h * 6);
-  const f = h * 6 - i;
-  const q = 1 - f;
+var generateRainbow = (function (numOfSteps, step) {
+  var r, g, b;
+  var h = step / numOfSteps;
+  var i = ~~(h * 6);
+  var f = h * 6 - i;
+  var q = 1 - f;
 
   switch (i % 6) {
     case 0:
@@ -128,27 +137,31 @@ var generateRainbow = ((numOfSteps, step) => {
       break;
   }
 
-  return `#${`00${(~~(r * 255)).toString(16)}`.slice(-2)}${`00${(~~(g * 255)).toString(16)}`.slice(-2)}${`00${(~~(b * 255)).toString(16)}`.slice(-2)}`;
+  return "#" + ("00" + (~~(r * 255)).toString(16)).slice(-2) + ("00" + (~~(g * 255)).toString(16)).slice(-2) + ("00" + (~~(b * 255)).toString(16)).slice(-2);
 });
 
-const BarChart = ({
-  expenses,
-  width,
-  height
-}) => {
-  const periods = [];
-  const cats = [];
-  expenses = orderBy(expenses, item => item.createdAt);
-  expenses.map(item => {
-    const month = new moment(item.createdAt).format('MM/YYYY');
-    let monthKey = periods.findIndex(i => i === month);
+var BarChart = function BarChart(_ref) {
+  var expenses = _ref.expenses,
+      width = _ref.width;
+  var periods = [];
+  var cats = [];
+  expenses = orderBy(expenses, function (item) {
+    return item.createdAt;
+  });
+  expenses.map(function (item) {
+    var month = new moment(item.createdAt).format('MM/YYYY');
+    var monthKey = periods.findIndex(function (i) {
+      return i === month;
+    });
 
     if (monthKey === -1) {
       monthKey = periods.push(month);
       monthKey--;
     }
 
-    let catKey = cats.findIndex(i => i.label === item.tags[0]);
+    var catKey = cats.findIndex(function (i) {
+      return i.label === item.tags[0];
+    });
 
     if (catKey === -1) {
       if (typeof item.tags[0] !== 'undefined') {
@@ -172,15 +185,15 @@ const BarChart = ({
       cats[catKey].data[monthKey] += item.amount / 100;
     }
   });
-  cats.map((i, k) => {
+  cats.map(function (i, k) {
     cats[k].backgroundColor = generateRainbow(cats.length, k);
     cats[k].borderColor = generateRainbow(cats.length, k);
   });
-  const formattedData = {
+  var formattedData = {
     labels: periods,
     datasets: cats
   };
-  const options = {
+  var options = {
     maintainAspectRatio: false,
     responsive: true
   };
@@ -196,28 +209,26 @@ const BarChart = ({
 };
 
 function TablePaginationActions(props) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const {
-    count,
-    page,
-    rowsPerPage,
-    onChangePage
-  } = props;
+  var classes = useStyles();
+  var theme = useTheme();
+  var count = props.count,
+      page = props.page,
+      rowsPerPage = props.rowsPerPage,
+      onChangePage = props.onChangePage;
 
-  const handleFirstPageButtonClick = event => {
+  var handleFirstPageButtonClick = function handleFirstPageButtonClick(event) {
     onChangePage(event, 0);
   };
 
-  const handleBackButtonClick = event => {
+  var handleBackButtonClick = function handleBackButtonClick(event) {
     onChangePage(event, page - 1);
   };
 
-  const handleNextButtonClick = event => {
+  var handleNextButtonClick = function handleNextButtonClick(event) {
     onChangePage(event, page + 1);
   };
 
-  const handleLastPageButtonClick = event => {
+  var handleLastPageButtonClick = function handleLastPageButtonClick(event) {
     onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
@@ -253,26 +264,29 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired
 };
 
-const ExpensesTable = ({
-  expenses,
-  width,
-  height
-}) => {
-  const classes = useStyles();
-  const rows = expenses;
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+var ExpensesTable = function ExpensesTable(_ref) {
+  var expenses = _ref.expenses;
+  var classes = useStyles();
+  var rows = expenses;
 
-  const handleChangePage = (event, newPage) => {
+  var _React$useState = React.useState(0),
+      page = _React$useState[0],
+      setPage = _React$useState[1];
+
+  var _React$useState2 = React.useState(10),
+      rowsPerPage = _React$useState2[0],
+      setRowsPerPage = _React$useState2[1];
+
+  var handleChangePage = function handleChangePage(event, newPage) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  var handleChangeRowsPerPage = function handleChangeRowsPerPage(event) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  var emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return /*#__PURE__*/React.createElement(TableContainer, {
     className: classes['table-container'],
     component: Paper
@@ -297,32 +311,34 @@ const ExpensesTable = ({
     align: "right"
   }, "Tags"))), /*#__PURE__*/React.createElement(TableBody, {
     className: classes.table__body
-  }, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(row => /*#__PURE__*/React.createElement(TableRow, {
-    className: classes.table__body__row,
-    key: row.id
-  }, /*#__PURE__*/React.createElement(TableCell, {
-    className: classes.table__body__row__cell,
-    component: "th",
-    scope: "row"
-  }, row.description), /*#__PURE__*/React.createElement(TableCell, {
-    className: classes.table__body__row__cell,
-    style: {
-      width: 160
-    },
-    align: "right"
-  }, row.amount / 100, " ", row.currency), /*#__PURE__*/React.createElement(TableCell, {
-    className: classes.table__body__row__cell,
-    style: {
-      width: 160
-    },
-    align: "right"
-  }, row.status), /*#__PURE__*/React.createElement(TableCell, {
-    className: classes.table__body__row__cell,
-    style: {
-      width: 160
-    },
-    align: "right"
-  }, row.tags))), emptyRows > 0 && /*#__PURE__*/React.createElement(TableRow, {
+  }, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(function (row) {
+    return /*#__PURE__*/React.createElement(TableRow, {
+      className: classes.table__body__row,
+      key: row.id
+    }, /*#__PURE__*/React.createElement(TableCell, {
+      className: classes.table__body__row__cell,
+      component: "th",
+      scope: "row"
+    }, row.description), /*#__PURE__*/React.createElement(TableCell, {
+      className: classes.table__body__row__cell,
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.amount / 100, " ", row.currency), /*#__PURE__*/React.createElement(TableCell, {
+      className: classes.table__body__row__cell,
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.status), /*#__PURE__*/React.createElement(TableCell, {
+      className: classes.table__body__row__cell,
+      style: {
+        width: 160
+      },
+      align: "right"
+    }, row.tags));
+  }), emptyRows > 0 && /*#__PURE__*/React.createElement(TableRow, {
     className: classes.table__body__row,
     style: {
       height: 53 * emptyRows
@@ -347,7 +363,7 @@ const ExpensesTable = ({
       inputProps: {
         'aria-label': 'rows per page'
       },
-      native: true
+      "native": true
     },
     onChangePage: handleChangePage,
     onChangeRowsPerPage: handleChangeRowsPerPage,
@@ -355,21 +371,25 @@ const ExpensesTable = ({
   })))));
 };
 
-const PieChart = ({
-  expenses,
-  width,
-  height
-}) => {
-  const labels = [];
-  const datasets = [{
+var PieChart = function PieChart(_ref) {
+  var expenses = _ref.expenses,
+      width = _ref.width;
+  var labels = [];
+  var datasets = [{
     data: [],
     backgroundColor: [],
     hoverBackgroundColor: []
   }];
-  expenses = orderBy(expenses, item => item.createdAt);
-  expenses.map(item => {
-    const label = item.tags[0] ?? 'undefined';
-    let labelKey = labels.findIndex(i => i === label);
+  expenses = orderBy(expenses, function (item) {
+    return item.createdAt;
+  });
+  expenses.map(function (item) {
+    var _item$tags$;
+
+    var label = (_item$tags$ = item.tags[0]) != null ? _item$tags$ : 'undefined';
+    var labelKey = labels.findIndex(function (i) {
+      return i === label;
+    });
 
     if (labelKey === -1) {
       labelKey = labels.push(label);
@@ -378,15 +398,15 @@ const PieChart = ({
       datasets[0].data[labelKey] += item.amount / 100;
     }
   });
-  labels.map((i, k) => {
+  labels.map(function (i, k) {
     datasets[0].backgroundColor[k] = generateRainbow(labels.length, k);
     datasets[0].hoverBackgroundColor[k] = generateRainbow(labels.length, k);
   });
-  const formattedData = {
+  var formattedData = {
     labels: labels,
     datasets: datasets
   };
-  const options = {
+  var options = {
     maintainAspectRatio: false,
     responsive: true
   };
@@ -402,97 +422,78 @@ const PieChart = ({
 };
 
 function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
-  useLayoutEffect(() => {
-    const updateSize = debounce(() => {
+  var _useState = useState([0, 0]),
+      size = _useState[0],
+      setSize = _useState[1];
+
+  useLayoutEffect(function () {
+    var updateSize = debounce(function () {
       setSize([window.innerWidth, window.innerHeight]);
     }, 100);
     window.addEventListener('resize', updateSize);
     updateSize();
-    return () => window.removeEventListener('resize', updateSize);
+    return function () {
+      return window.removeEventListener('resize', updateSize);
+    };
   }, []);
   return size;
 }
 
-let _ = t => t,
-    _t;
-const ALL_EXPENSES = gql(_t || (_t = _`
-  query ExpensesPage(
-    $account: AccountReferenceInput!
-    $slug: String!
-    $offset: Int!
-    $dateFrom: ISODateTime!
-  ) {
-    expenses(
-      account: $account
-      orderBy: { field: CREATED_AT, direction: ASC }
-      offset: $offset
-      limit: 100
-      status: PAID
-      dateFrom: $dateFrom
-    ) {
-      offset
-      totalCount
-      limit
-      nodes {
-        id
-        amount
-        tags
-        description
-        currency
-        status
-        createdAt
-      }
-    }
-    account(slug: $slug) {
-      id
-      imageUrl
-      name
-    }
-  }
-`));
+function _templateObject() {
+  var data = _taggedTemplateLiteralLoose(["\n  query ExpensesPage(\n    $account: AccountReferenceInput!\n    $slug: String!\n    $offset: Int!\n    $dateFrom: ISODateTime!\n  ) {\n    expenses(\n      account: $account\n      orderBy: { field: CREATED_AT, direction: ASC }\n      offset: $offset\n      limit: 100\n      status: PAID\n      dateFrom: $dateFrom\n    ) {\n      offset\n      totalCount\n      limit\n      nodes {\n        id\n        amount\n        tags\n        description\n        currency\n        status\n        createdAt\n      }\n    }\n    account(slug: $slug) {\n      id\n      imageUrl\n      name\n    }\n  }\n"]);
 
-const TransparencyPage = ({
-  slug,
-  locale,
-  messages,
-  date
-}) => {
-  const classes = useStyles();
-  const [width, height] = useWindowSize();
-  const offset = 0;
-  const dateFrom = useState(date ?? '2001-01-01');
-  const {
-    loading,
-    error,
-    data,
-    fetchMore
-  } = useQuery(ALL_EXPENSES, {
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+var ALL_EXPENSES = gql(_templateObject());
+
+var TransparencyPage = function TransparencyPage(_ref) {
+  var slug = _ref.slug,
+      locale = _ref.locale,
+      messages = _ref.messages,
+      date = _ref.date;
+  var classes = useStyles();
+
+  var _useWindowSize = useWindowSize(),
+      width = _useWindowSize[0],
+      height = _useWindowSize[1];
+
+  var offset = 0;
+  var dateFrom = useState(date != null ? date : '2001-01-01');
+
+  var _useQuery = useQuery(ALL_EXPENSES, {
     variables: {
       account: {
         slug: slug
       },
-      slug,
-      offset,
-      dateFrom
+      slug: slug,
+      offset: offset,
+      dateFrom: dateFrom
     }
-  });
+  }),
+      loading = _useQuery.loading,
+      error = _useQuery.error,
+      data = _useQuery.data,
+      fetchMore = _useQuery.fetchMore;
+
   if (loading) return /*#__PURE__*/React.createElement("p", null, "Loading...");
   if (error) return /*#__PURE__*/React.createElement("p", null, "Error :(");
-  const account = data.account;
-  const expenses = data.expenses.nodes;
+  var account = data.account;
+  var expenses = data.expenses.nodes;
   fetchMore({
     variables: {
       offset: data.expenses.nodes.length
     },
-    updateQuery: (prev, {
-      fetchMoreResult
-    }) => {
+    updateQuery: function updateQuery(prev, _ref2) {
+      var fetchMoreResult = _ref2.fetchMoreResult;
       if (!fetchMoreResult) return prev;
       fetchMoreResult.expenses.nodes = prev.expenses.nodes.concat(fetchMoreResult.expenses.nodes);
       return Object.assign({}, fetchMoreResult);
     }
-  }).then(res => {
+  }).then(function (res) {
     console.log('Res', res);
   });
 
