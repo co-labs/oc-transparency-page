@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { IntlProvider, FormattedMessage } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -521,15 +521,7 @@ var TransparencyPage = function TransparencyPage(_ref) {
     alt: ""
   }), account.name)), /*#__PURE__*/React.createElement("div", {
     className: classes.body
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: classes.body__title
-  }, /*#__PURE__*/React.createElement(FormattedMessage, {
-    id: "allExpensesFrom",
-    defaultMessage: "All expenses from {date}",
-    values: {
-      date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
-    }
-  })), /*#__PURE__*/React.createElement(Grid, {
+  }, /*#__PURE__*/React.createElement(Grid, {
     className: classes.charts,
     container: true,
     spacing: 5
