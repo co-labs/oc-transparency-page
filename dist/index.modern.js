@@ -1,10 +1,18 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
+<<<<<<< HEAD
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { orderBy, debounce } from 'lodash';
+=======
+import { IntlProvider } from 'react-intl';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { orderBy } from 'lodash';
+import moment from 'moment';
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 import { Bar, Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
@@ -85,12 +93,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+<<<<<<< HEAD
 var generateRainbow = ((numOfSteps, step) => {
   let r, g, b;
   const h = step / numOfSteps;
   const i = ~~(h * 6);
   const f = h * 6 - i;
   const q = 1 - f;
+=======
+  strings.raw = raw;
+  return strings;
+}
+
+var styles = {"container":"_1Lxpd","title":"_2KezC","logo":"_Lw2P8"};
+
+var generateRainbow = (function (numOfSteps, step) {
+  var r, g, b;
+  var h = step / numOfSteps;
+  var i = ~~(h * 6);
+  var f = h * 6 - i;
+  var q = 1 - f;
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 
   switch (i % 6) {
     case 0:
@@ -182,6 +205,7 @@ const BarChart = ({
     labels: periods,
     datasets: cats
   };
+<<<<<<< HEAD
   const options = {
     maintainAspectRatio: false,
     responsive: true
@@ -190,6 +214,14 @@ const BarChart = ({
     style: {
       height: width > 600 ? 350 : 450,
       position: 'relative'
+=======
+  return /*#__PURE__*/React.createElement(Bar, {
+    data: formattedData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     }
   }, /*#__PURE__*/React.createElement(Bar, {
     data: formattedData,
@@ -388,6 +420,7 @@ const PieChart = ({
     labels: labels,
     datasets: datasets
   };
+<<<<<<< HEAD
   const options = {
     maintainAspectRatio: false,
     responsive: true
@@ -396,6 +429,14 @@ const PieChart = ({
     style: {
       height: width > 600 ? 300 : 350,
       position: 'relative'
+=======
+  return /*#__PURE__*/React.createElement(Doughnut, {
+    data: formattedData,
+    options: {
+      maintainAspectRatio: true,
+      aspectRatio: 1,
+      responsive: true
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     }
   }, /*#__PURE__*/React.createElement(Doughnut, {
     data: formattedData,
@@ -511,15 +552,22 @@ const TransparencyPage = ({
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React.createElement("div", {
+<<<<<<< HEAD
     className: classes.wrapper
   }, /*#__PURE__*/React.createElement("div", {
     className: classes.header
   }, /*#__PURE__*/React.createElement("h1", {
     className: classes.header__title
+=======
+    className: styles.container
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "logo"
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React.createElement("img", {
     className: classes.header__logo,
     src: account.imageUrl,
     alt: ""
+<<<<<<< HEAD
   }), account.name)), /*#__PURE__*/React.createElement("div", {
     className: classes.body
   }, /*#__PURE__*/React.createElement("h2", {
@@ -532,21 +580,41 @@ const TransparencyPage = ({
     }
   })), /*#__PURE__*/React.createElement(Grid, {
     className: classes.charts,
+=======
+  })), /*#__PURE__*/React.createElement("h1", {
+    className: "title"
+  }, account.name), /*#__PURE__*/React.createElement("div", {
+    className: "content",
+    style: {
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement(Grid, {
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     container: true,
     spacing: 5
   }, /*#__PURE__*/React.createElement(Grid, {
     className: classes.charts__bar,
     item: true,
     xs: 12,
+<<<<<<< HEAD
     md: 8
+=======
+    sm: 12,
+    md: 8,
+    lg: 8,
+    style: {
+      position: 'relative',
+      minHeight: 100,
+      minWidth: 500
+    }
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React.createElement(BarChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   })), /*#__PURE__*/React.createElement(Grid, {
     className: classes.charts__pie,
     item: true,
     xs: 12,
+<<<<<<< HEAD
     md: 4
   }, /*#__PURE__*/React.createElement(PieChart, {
     expenses: expenses,
@@ -557,6 +625,19 @@ const TransparencyPage = ({
     item: true,
     xs: 12
   }, /*#__PURE__*/React.createElement(ExpensesTable, {
+=======
+    sm: 12,
+    md: 4,
+    lg: 4,
+    style: {
+      position: 'relative',
+      minHeight: 500,
+      minWidth: 500
+    }
+  }, /*#__PURE__*/React.createElement(PieChart, {
+    expenses: expenses
+  }))), /*#__PURE__*/React.createElement(ExpensesTable, {
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     expenses: expenses,
     width: width,
     height: height

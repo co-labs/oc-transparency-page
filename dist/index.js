@@ -4,10 +4,15 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var client = require('@apollo/client');
 var reactIntl = require('react-intl');
+<<<<<<< HEAD
 var moment = _interopDefault(require('moment'));
+=======
+var styles$1 = require('@material-ui/core/styles');
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var styles = require('@material-ui/core/styles');
 var lodash = require('lodash');
+var moment = _interopDefault(require('moment'));
 var reactChartjs2 = require('react-chartjs-2');
 var PropTypes = _interopDefault(require('prop-types'));
 var Table = _interopDefault(require('@material-ui/core/Table'));
@@ -34,6 +39,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
+<<<<<<< HEAD
 var useStyles = styles.makeStyles(function (theme) {
   var _body__title, _header__title, _table__head__row__ce, _table__body__row__ce;
 
@@ -96,6 +102,9 @@ var useStyles = styles.makeStyles(function (theme) {
     }
   };
 });
+=======
+var styles = {"container":"_1Lxpd","title":"_2KezC","logo":"_Lw2P8"};
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -198,6 +207,7 @@ var BarChart = function BarChart(_ref) {
     labels: periods,
     datasets: cats
   };
+<<<<<<< HEAD
   var options = {
     maintainAspectRatio: false,
     responsive: true
@@ -206,6 +216,14 @@ var BarChart = function BarChart(_ref) {
     style: {
       height: width > 600 ? 350 : 450,
       position: 'relative'
+=======
+  return /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
+    data: formattedData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     }
   }, /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
     data: formattedData,
@@ -411,6 +429,7 @@ var PieChart = function PieChart(_ref) {
     labels: labels,
     datasets: datasets
   };
+<<<<<<< HEAD
   var options = {
     maintainAspectRatio: false,
     responsive: true
@@ -419,6 +438,14 @@ var PieChart = function PieChart(_ref) {
     style: {
       height: width > 600 ? 300 : 350,
       position: 'relative'
+=======
+  return /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
+    data: formattedData,
+    options: {
+      maintainAspectRatio: true,
+      aspectRatio: 1,
+      responsive: true
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     }
   }, /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
     data: formattedData,
@@ -515,15 +542,22 @@ var TransparencyPage = function TransparencyPage(_ref) {
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React__default.createElement("div", {
+<<<<<<< HEAD
     className: classes.wrapper
   }, /*#__PURE__*/React__default.createElement("div", {
     className: classes.header
   }, /*#__PURE__*/React__default.createElement("h1", {
     className: classes.header__title
+=======
+    className: styles.container
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "logo"
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React__default.createElement("img", {
     className: classes.header__logo,
     src: account.imageUrl,
     alt: ""
+<<<<<<< HEAD
   }), account.name)), /*#__PURE__*/React__default.createElement("div", {
     className: classes.body
   }, /*#__PURE__*/React__default.createElement("h2", {
@@ -536,21 +570,41 @@ var TransparencyPage = function TransparencyPage(_ref) {
     }
   })), /*#__PURE__*/React__default.createElement(Grid, {
     className: classes.charts,
+=======
+  })), /*#__PURE__*/React__default.createElement("h1", {
+    className: "title"
+  }, account.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "content",
+    style: {
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React__default.createElement(Grid, {
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     container: true,
     spacing: 5
   }, /*#__PURE__*/React__default.createElement(Grid, {
     className: classes.charts__bar,
     item: true,
     xs: 12,
+<<<<<<< HEAD
     md: 8
+=======
+    sm: 12,
+    md: 8,
+    lg: 8,
+    style: {
+      position: 'relative',
+      minHeight: 100,
+      minWidth: 500
+    }
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React__default.createElement(BarChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   })), /*#__PURE__*/React__default.createElement(Grid, {
     className: classes.charts__pie,
     item: true,
     xs: 12,
+<<<<<<< HEAD
     md: 4
   }, /*#__PURE__*/React__default.createElement(PieChart, {
     expenses: expenses,
@@ -561,6 +615,19 @@ var TransparencyPage = function TransparencyPage(_ref) {
     item: true,
     xs: 12
   }, /*#__PURE__*/React__default.createElement(ExpensesTable, {
+=======
+    sm: 12,
+    md: 4,
+    lg: 4,
+    style: {
+      position: 'relative',
+      minHeight: 500,
+      minWidth: 500
+    }
+  }, /*#__PURE__*/React__default.createElement(PieChart, {
+    expenses: expenses
+  }))), /*#__PURE__*/React__default.createElement(ExpensesTable, {
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     expenses: expenses,
     width: width,
     height: height

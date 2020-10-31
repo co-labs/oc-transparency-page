@@ -1,5 +1,6 @@
 /* add css module styles here (optional) */
 
+<<<<<<< HEAD
 ._styles-module__wrapper__1I_qj {
   border: 1px solid red !important;
 }
@@ -16,6 +17,21 @@
 
 ._styles-module__header__logo__1XkLR {
   height: 1em !important;
+=======
+._1Lxpd{
+  text-align: center;
+  padding: 1em;
+}
+
+._2KezC {
+  padding: 0 0 0.5em;
+  font-size: 2em;
+  text-align: center;
+}
+
+._Lw2P8{
+  text-align: center;
+>>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 }
 
 @media (max-width: 600px) {

@@ -1,0 +1,16 @@
+/* add css module styles here (optional) */
+
+.container{
+  text-align: center;
+  padding: 1em;
+}
+
+.title {
+  padding: 0 0 0.5em;
+  font-size: 2em;
+  text-align: center;
+}
+
+.logo{
+  text-align: center;
+}

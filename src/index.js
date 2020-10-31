@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
+import styles from './styles.module.css'
 import { useQuery, gql } from '@apollo/client'
-import { IntlProvider, FormattedMessage } from 'react-intl'
-import moment from 'moment'
+import { IntlProvider } from 'react-intl'
+import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import { useStyles } from './theme'
 import BarChart from './components/BarChart'
 import ExpensesTable from './components/ExpensesTable'
 import PieChart from './components/PieChart'
-import { useWindowSize } from "./utils/useWindowSize";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing(2)
+  }
+}))
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -44,7 +56,6 @@ const ALL_EXPENSES = gql`
     }
   }
 `
-
 /**
  * Transparency page component
  * @param slug The account slug
@@ -53,7 +64,8 @@ const ALL_EXPENSES = gql`
  */
 const TransparencyPage = ({ slug, locale, messages, date }) => {
   const classes = useStyles()
-  const [width, height] = useWindowSize()
+  const [width] = useState(800)
+  const [height] = useState(300)
   const offset = 0
   const dateFrom = useState(date ?? '2001-01-01')
   /**
@@ -67,11 +79,11 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
       dateFrom
     }
   })
-
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
 
   const account = data.account
+
   const expenses = data.expenses.nodes
 
   fetchMore({
@@ -101,15 +113,13 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
 
   return (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <div className={classes.wrapper}>
-        <div className={classes.header}>
-          <h1 className={classes.header__title}>
-            <img className={classes.header__logo} src={account.imageUrl} alt='' />
-            {account.name}
-          </h1>
+      <div className={styles.container}>
+        <div className='logo'>
+          <img className={styles.header__logo} src={account.imageUrl} alt='' />
         </div>
-        <div className={classes.body}>
-          <h2 className={classes.body__title}>
+        <h1 className='title'>{account.name}</h1>
+        <div className='content' style={{ position: 'relative' }}>
+          {/* <h2>
             <FormattedMessage
               id='allExpensesFrom'
               defaultMessage='All expenses from {date}'
@@ -117,18 +127,30 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
                 date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
               }}
             />
-          </h2>
-          <Grid className={classes.charts} container spacing={5}>
-            <Grid className={classes.charts__bar} item xs={12} md={8}>
-              <BarChart expenses={expenses} width={width} height={height} />
+          </h2> */}
+          <Grid container className={classes.root} spacing={2}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={8}
+              lg={8}
+              style={{ position: 'relative', minHeight: 100, minWidth: 500 }}
+            >
+              <BarChart expenses={expenses} />
             </Grid>
-            <Grid className={classes.charts__pie} item xs={12} md={4}>
-              <PieChart expenses={expenses} width={width} height={height} />
-            </Grid>
-            <Grid className={classes.charts__table} item xs={12}>
-              <ExpensesTable expenses={expenses} width={width} height={height} />
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+              lg={4}
+              style={{ position: 'relative', minHeight: 500, minWidth: 500 }}
+            >
+              <PieChart expenses={expenses} />
             </Grid>
           </Grid>
+          <ExpensesTable expenses={expenses} width={width} height={height} />
         </div>
       </div>
     </IntlProvider>
