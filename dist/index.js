@@ -4,10 +4,10 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var client = require('@apollo/client');
 var reactIntl = require('react-intl');
-var moment = _interopDefault(require('moment'));
 var styles$1 = require('@material-ui/core/styles');
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var lodash = require('lodash');
+var moment = _interopDefault(require('moment'));
 var reactChartjs2 = require('react-chartjs-2');
 var PropTypes = _interopDefault(require('prop-types'));
 var Table = _interopDefault(require('@material-ui/core/Table'));
@@ -34,7 +34,11 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
+<<<<<<< HEAD
 var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
+=======
+var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
 
 var generateRainbow = (function (numOfSteps, step) {
   var r, g, b;
@@ -88,7 +92,6 @@ var BarChart = function BarChart(_ref) {
   var expenses = _ref.expenses;
   var periods = [];
   var cats = [];
-  console.log('Count', expenses.length);
   expenses = lodash.orderBy(expenses, function (item) {
     return item.createdAt;
   });
@@ -141,22 +144,78 @@ var BarChart = function BarChart(_ref) {
   return /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
     data: formattedData,
     options: {
-      maintainAspectRatio: true
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2
     }
   });
 };
 
-var useStyles1 = styles$1.makeStyles(function (theme) {
+var useStyles = styles$1.makeStyles(function (theme) {
+  var _body__title, _header__title, _table__head__row__ce, _table__body__row__ce;
+
   return {
-    root: {
+    body: {},
+    body__title: (_body__title = {
+      fontSize: '1.5em',
+      textAlign: 'center'
+    }, _body__title[theme.breakpoints.down('xs')] = {
+      fontSize: '1.2em'
+    }, _body__title),
+    charts: {
+      flexGrow: 1
+    },
+    charts__bar: {},
+    charts__pie: {},
+    charts__table: {},
+    header: {
+      padding: '.5em',
+      textAlign: 'center'
+    },
+    header__logo: {
+      height: '1em !important'
+    },
+    header__title: (_header__title = {
+      fontSize: '2em'
+    }, _header__title[theme.breakpoints.down('xs')] = {
+      fontSize: '1.6em'
+    }, _header__title),
+    pagination: {
       flexShrink: 0,
       marginLeft: theme.spacing(2.5)
+    },
+    pagination__first: {},
+    pagination__prev: {},
+    pagination__next: {},
+    pagination__last: {},
+    table: {},
+    table__head: {},
+    table__head__row: {},
+    table__head__row__cell: (_table__head__row__ce = {
+      fontSize: '1em'
+    }, _table__head__row__ce[theme.breakpoints.down('xs')] = {
+      fontSize: '.8em',
+      padding: 10
+    }, _table__head__row__ce),
+    table__body: {},
+    table__body__row: {},
+    table__body__row__cell: (_table__body__row__ce = {
+      fontSize: '.9em'
+    }, _table__body__row__ce[theme.breakpoints.down('xs')] = {
+      fontSize: '.7em',
+      padding: 10
+    }, _table__body__row__ce),
+    table__footer: {},
+    table__footer__row: {},
+    'table-container': {},
+    wrapper: {
+      border: '1px solid red'
     }
   };
 });
 
 function TablePaginationActions(props) {
-  var classes = useStyles1();
+  var classes = useStyles();
   var theme = styles$1.useTheme();
   var count = props.count,
       page = props.page,
@@ -180,20 +239,24 @@ function TablePaginationActions(props) {
   };
 
   return /*#__PURE__*/React__default.createElement("div", {
-    className: classes.root
+    className: classes.pagination
   }, /*#__PURE__*/React__default.createElement(IconButton, {
+    className: classes.pagination__first,
     onClick: handleFirstPageButtonClick,
     disabled: page === 0,
     "aria-label": "first page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(LastPageIcon, null) : /*#__PURE__*/React__default.createElement(FirstPageIcon, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    className: classes.pagination__prev,
     onClick: handleBackButtonClick,
     disabled: page === 0,
     "aria-label": "previous page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(KeyboardArrowRight, null) : /*#__PURE__*/React__default.createElement(KeyboardArrowLeft, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    className: classes.pagination__next,
     onClick: handleNextButtonClick,
     disabled: page >= Math.ceil(count / rowsPerPage) - 1,
     "aria-label": "next page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React__default.createElement(KeyboardArrowLeft, null) : /*#__PURE__*/React__default.createElement(KeyboardArrowRight, null)), /*#__PURE__*/React__default.createElement(IconButton, {
+    className: classes.pagination__last,
     onClick: handleLastPageButtonClick,
     disabled: page >= Math.ceil(count / rowsPerPage) - 1,
     "aria-label": "last page"
@@ -209,13 +272,14 @@ TablePaginationActions.propTypes = {
 
 var ExpensesTable = function ExpensesTable(_ref) {
   var expenses = _ref.expenses;
+  var classes = useStyles();
   var rows = expenses;
 
   var _React$useState = React__default.useState(0),
       page = _React$useState[0],
       setPage = _React$useState[1];
 
-  var _React$useState2 = React__default.useState(5),
+  var _React$useState2 = React__default.useState(10),
       rowsPerPage = _React$useState2[0],
       setRowsPerPage = _React$useState2[1];
 
@@ -230,51 +294,74 @@ var ExpensesTable = function ExpensesTable(_ref) {
 
   var emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return /*#__PURE__*/React__default.createElement(TableContainer, {
+    className: classes['table-container'],
     component: Paper
   }, /*#__PURE__*/React__default.createElement(Table, {
+    className: classes.table,
     "aria-label": "simple table"
-  }, /*#__PURE__*/React__default.createElement(TableHead, null, /*#__PURE__*/React__default.createElement(TableRow, null, /*#__PURE__*/React__default.createElement(TableCell, {
+  }, /*#__PURE__*/React__default.createElement(TableHead, {
+    className: classes.table__head
+  }, /*#__PURE__*/React__default.createElement(TableRow, {
+    className: classes.table__head__row
+  }, /*#__PURE__*/React__default.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "left"
   }, "Description"), /*#__PURE__*/React__default.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "left"
   }, "Amount"), /*#__PURE__*/React__default.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "right"
   }, "Status"), /*#__PURE__*/React__default.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "right"
-  }, "Tags"))), /*#__PURE__*/React__default.createElement(TableBody, null, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(function (row) {
+  }, "Tags"))), /*#__PURE__*/React__default.createElement(TableBody, {
+    className: classes.table__body
+  }, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(function (row) {
     return /*#__PURE__*/React__default.createElement(TableRow, {
-      key: row.name
+      className: classes.table__body__row,
+      key: row.id
     }, /*#__PURE__*/React__default.createElement(TableCell, {
+      className: classes.table__body__row__cell,
       component: "th",
       scope: "row"
     }, row.description), /*#__PURE__*/React__default.createElement(TableCell, {
+      className: classes.table__body__row__cell,
       style: {
         width: 160
       },
       align: "right"
     }, row.amount / 100, " ", row.currency), /*#__PURE__*/React__default.createElement(TableCell, {
+      className: classes.table__body__row__cell,
       style: {
         width: 160
       },
       align: "right"
     }, row.status), /*#__PURE__*/React__default.createElement(TableCell, {
+      className: classes.table__body__row__cell,
       style: {
         width: 160
       },
       align: "right"
     }, row.tags));
   }), emptyRows > 0 && /*#__PURE__*/React__default.createElement(TableRow, {
+    className: classes.table__body__row,
     style: {
       height: 53 * emptyRows
     }
   }, /*#__PURE__*/React__default.createElement(TableCell, {
+    className: classes.table__body__row__cell,
     colSpan: 6
-  }))), /*#__PURE__*/React__default.createElement(TableFooter, null, /*#__PURE__*/React__default.createElement(TableRow, null, /*#__PURE__*/React__default.createElement(TablePagination, {
+  }))), /*#__PURE__*/React__default.createElement(TableFooter, {
+    className: classes.table__footer
+  }, /*#__PURE__*/React__default.createElement(TableRow, {
+    className: classes.table__footer__row
+  }, /*#__PURE__*/React__default.createElement(TablePagination, {
     rowsPerPageOptions: [5, 10, 25, {
       label: 'All',
       value: -1
     }],
-    colSpan: 3,
+    colSpan: 4,
     count: rows.length,
     rowsPerPage: rowsPerPage,
     page: page,
@@ -327,7 +414,9 @@ var PieChart = function PieChart(_ref) {
   return /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
     data: formattedData,
     options: {
-      maintainAspectRatio: true
+      maintainAspectRatio: true,
+      aspectRatio: 1,
+      responsive: true
     }
   });
 };
@@ -341,7 +430,7 @@ function _templateObject() {
 
   return data;
 }
-var useStyles = styles$1.makeStyles(function (theme) {
+var useStyles$1 = styles$1.makeStyles(function (theme) {
   return {
     root: {
       flexGrow: 1
@@ -362,7 +451,7 @@ var TransparencyPage = function TransparencyPage(_ref) {
       locale = _ref.locale,
       messages = _ref.messages,
       date = _ref.date;
-  var classes = useStyles();
+  var classes = useStyles$1();
 
   var _useState = React.useState(800),
       width = _useState[0];
@@ -419,39 +508,50 @@ var TransparencyPage = function TransparencyPage(_ref) {
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React__default.createElement("div", {
-    className: styles.title
-  }, /*#__PURE__*/React__default.createElement("h1", {
-    className: "header"
+    className: styles.container
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "logo"
   }, /*#__PURE__*/React__default.createElement("img", {
     className: styles.header__logo,
     src: account.imageUrl,
     alt: ""
-  }), account.name), /*#__PURE__*/React__default.createElement("div", {
-    className: "content"
-  }, /*#__PURE__*/React__default.createElement("h2", null, /*#__PURE__*/React__default.createElement(reactIntl.FormattedMessage, {
-    id: "allExpensesFrom",
-    defaultMessage: "All expenses from {date}",
-    values: {
-      date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
+  })), /*#__PURE__*/React__default.createElement("h1", {
+    className: "title"
+  }, account.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "content",
+    style: {
+      position: 'relative'
     }
-  })), /*#__PURE__*/React__default.createElement(Grid, {
+  }, /*#__PURE__*/React__default.createElement(Grid, {
     container: true,
     className: classes.root,
     spacing: 2
   }, /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
-    xs: 8
+    xs: 12,
+    sm: 12,
+    md: 8,
+    lg: 8,
+    style: {
+      position: 'relative',
+      minHeight: 100,
+      minWidth: 500
+    }
   }, /*#__PURE__*/React__default.createElement(BarChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   })), /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
-    xs: 4
+    xs: 12,
+    sm: 12,
+    md: 4,
+    lg: 4,
+    style: {
+      position: 'relative',
+      minHeight: 500,
+      minWidth: 500
+    }
   }, /*#__PURE__*/React__default.createElement(PieChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   }))), /*#__PURE__*/React__default.createElement(ExpensesTable, {
     expenses: expenses,
     width: width,

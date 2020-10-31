@@ -4,11 +4,17 @@ import moment from 'moment'
 import generateRainbow from '../utils/generateRainbow'
 import { Bar } from 'react-chartjs-2'
 
+/**
+ * BarChart formatter for expenses
+ * @param expenses
+ * @param width
+ * @param height
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const BarChart = ({ expenses, width, height }) => {
   const periods = []
   const cats = []
-
-  console.log('Count', expenses.length)
 
   expenses = orderBy(expenses, (item) => item.createdAt)
 
@@ -66,7 +72,9 @@ const BarChart = ({ expenses, width, height }) => {
     <Bar
       data={formattedData}
       options={{
-        maintainAspectRatio: true
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 2
       }}
     />
   )

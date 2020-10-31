@@ -1,11 +1,26 @@
 /* add css module styles here (optional) */
 
+<<<<<<< HEAD
 ._styles-module__title__2KezC {
   padding: 0.5em;
+=======
+._styles-module__container__1Lxpd{
+  text-align: center;
+  padding: 1em;
+}
+
+._styles-module__title__2KezC {
+  padding: 0 0 0.5em;
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   font-size: 2em;
   text-align: center;
 }
 
+<<<<<<< HEAD
 ._styles-module__header__logo__1XkLR{
   height: 1em !important;
+=======
+._styles-module__logo__Lw2P8{
+  text-align: center;
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
 }

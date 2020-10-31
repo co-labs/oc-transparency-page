@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import styles from './styles.module.css'
 import { useQuery, gql } from '@apollo/client'
-import { IntlProvider, FormattedMessage } from 'react-intl'
-import moment from 'moment'
+import { IntlProvider } from 'react-intl'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import BarChart from './components/BarChart'
@@ -11,16 +10,16 @@ import PieChart from './components/PieChart'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     height: 140,
-    width: 100,
+    width: 100
   },
   control: {
-    padding: theme.spacing(2),
-  },
-}));
+    padding: theme.spacing(2)
+  }
+}))
 
 const ALL_EXPENSES = gql`
   query ExpensesPage(
@@ -64,7 +63,7 @@ const ALL_EXPENSES = gql`
  * @constructor
  */
 const TransparencyPage = ({ slug, locale, messages, date }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   const [width] = useState(800)
   const [height] = useState(300)
   const offset = 0
@@ -114,13 +113,13 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
 
   return (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <div className={styles.title}>
-        <h1 className='header'>
+      <div className={styles.container}>
+        <div className='logo'>
           <img className={styles.header__logo} src={account.imageUrl} alt='' />
-          {account.name}
-        </h1>
-        <div className='content'>
-          <h2>
+        </div>
+        <h1 className='title'>{account.name}</h1>
+        <div className='content' style={{ position: 'relative' }}>
+          {/* <h2>
             <FormattedMessage
               id='allExpensesFrom'
               defaultMessage='All expenses from {date}'
@@ -128,13 +127,27 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
                 date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
               }}
             />
-          </h2>
+          </h2> */}
           <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={8}>
-              <BarChart expenses={expenses} width={width} height={height} />
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={8}
+              lg={8}
+              style={{ position: 'relative', minHeight: 100, minWidth: 500 }}
+            >
+              <BarChart expenses={expenses} />
             </Grid>
-            <Grid item xs={4}>
-              <PieChart expenses={expenses} width={width} height={height} />
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+              lg={4}
+              style={{ position: 'relative', minHeight: 500, minWidth: 500 }}
+            >
+              <PieChart expenses={expenses} />
             </Grid>
           </Grid>
           <ExpensesTable expenses={expenses} width={width} height={height} />
@@ -143,5 +156,9 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
     </IntlProvider>
   )
 }
+
+export * from './components/BarChart'
+export * from './components/PieChart'
+export * from './components/ExpensesTable'
 
 export default TransparencyPage

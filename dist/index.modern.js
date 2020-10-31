@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import moment from 'moment';
+import { IntlProvider } from 'react-intl';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { orderBy } from 'lodash';
+import moment from 'moment';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
@@ -22,7 +22,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
+<<<<<<< HEAD
 var styles = {"title":"_styles-module__title__2KezC","header__logo":"_styles-module__header__logo__1XkLR"};
+=======
+var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
 
 var generateRainbow = ((numOfSteps, step) => {
   let r, g, b;
@@ -79,7 +83,10 @@ const BarChart = ({
 }) => {
   const periods = [];
   const cats = [];
+<<<<<<< HEAD
   console.log('Count', expenses.length);
+=======
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   expenses = orderBy(expenses, item => item.createdAt);
   expenses.map(item => {
     const month = new moment(item.createdAt).format('MM/YYYY');
@@ -126,20 +133,89 @@ const BarChart = ({
   return /*#__PURE__*/React.createElement(Bar, {
     data: formattedData,
     options: {
-      maintainAspectRatio: true
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2
     }
   });
 };
 
+<<<<<<< HEAD
 const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     marginLeft: theme.spacing(2.5)
+=======
+const useStyles = makeStyles(theme => ({
+  body: {},
+  body__title: {
+    fontSize: '1.5em',
+    textAlign: 'center',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.2em'
+    }
+  },
+  charts: {
+    flexGrow: 1
+  },
+  charts__bar: {},
+  charts__pie: {},
+  charts__table: {},
+  header: {
+    padding: '.5em',
+    textAlign: 'center'
+  },
+  header__logo: {
+    height: '1em !important'
+  },
+  header__title: {
+    fontSize: '2em',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.6em'
+    }
+  },
+  pagination: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5)
+  },
+  pagination__first: {},
+  pagination__prev: {},
+  pagination__next: {},
+  pagination__last: {},
+  table: {},
+  table__head: {},
+  table__head__row: {},
+  table__head__row__cell: {
+    fontSize: '1em',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '.8em',
+      padding: 10
+    }
+  },
+  table__body: {},
+  table__body__row: {},
+  table__body__row__cell: {
+    fontSize: '.9em',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '.7em',
+      padding: 10
+    }
+  },
+  table__footer: {},
+  table__footer__row: {},
+  'table-container': {},
+  wrapper: {
+    border: '1px solid red'
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   }
 }));
 
 function TablePaginationActions(props) {
+<<<<<<< HEAD
   const classes = useStyles1();
+=======
+  const classes = useStyles();
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   const theme = useTheme();
   const {
     count,
@@ -165,20 +241,24 @@ function TablePaginationActions(props) {
   };
 
   return /*#__PURE__*/React.createElement("div", {
-    className: classes.root
+    className: classes.pagination
   }, /*#__PURE__*/React.createElement(IconButton, {
+    className: classes.pagination__first,
     onClick: handleFirstPageButtonClick,
     disabled: page === 0,
     "aria-label": "first page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React.createElement(LastPageIcon, null) : /*#__PURE__*/React.createElement(FirstPageIcon, null)), /*#__PURE__*/React.createElement(IconButton, {
+    className: classes.pagination__prev,
     onClick: handleBackButtonClick,
     disabled: page === 0,
     "aria-label": "previous page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React.createElement(KeyboardArrowRight, null) : /*#__PURE__*/React.createElement(KeyboardArrowLeft, null)), /*#__PURE__*/React.createElement(IconButton, {
+    className: classes.pagination__next,
     onClick: handleNextButtonClick,
     disabled: page >= Math.ceil(count / rowsPerPage) - 1,
     "aria-label": "next page"
   }, theme.direction === 'rtl' ? /*#__PURE__*/React.createElement(KeyboardArrowLeft, null) : /*#__PURE__*/React.createElement(KeyboardArrowRight, null)), /*#__PURE__*/React.createElement(IconButton, {
+    className: classes.pagination__last,
     onClick: handleLastPageButtonClick,
     disabled: page >= Math.ceil(count / rowsPerPage) - 1,
     "aria-label": "last page"
@@ -197,9 +277,16 @@ const ExpensesTable = ({
   width,
   height
 }) => {
+<<<<<<< HEAD
   const rows = expenses;
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+=======
+  const classes = useStyles();
+  const rows = expenses;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -212,49 +299,90 @@ const ExpensesTable = ({
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return /*#__PURE__*/React.createElement(TableContainer, {
+    className: classes['table-container'],
     component: Paper
   }, /*#__PURE__*/React.createElement(Table, {
+    className: classes.table,
     "aria-label": "simple table"
-  }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, {
+  }, /*#__PURE__*/React.createElement(TableHead, {
+    className: classes.table__head
+  }, /*#__PURE__*/React.createElement(TableRow, {
+    className: classes.table__head__row
+  }, /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "left"
   }, "Description"), /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "left"
   }, "Amount"), /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "right"
   }, "Status"), /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__head__row__cell,
     align: "right"
+<<<<<<< HEAD
   }, "Tags"))), /*#__PURE__*/React.createElement(TableBody, null, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(row => /*#__PURE__*/React.createElement(TableRow, {
     key: row.name
   }, /*#__PURE__*/React.createElement(TableCell, {
     component: "th",
     scope: "row"
   }, row.description), /*#__PURE__*/React.createElement(TableCell, {
+=======
+  }, "Tags"))), /*#__PURE__*/React.createElement(TableBody, {
+    className: classes.table__body
+  }, (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map(row => /*#__PURE__*/React.createElement(TableRow, {
+    className: classes.table__body__row,
+    key: row.id
+  }, /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__body__row__cell,
+    component: "th",
+    scope: "row"
+  }, row.description), /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__body__row__cell,
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
     style: {
       width: 160
     },
     align: "right"
   }, row.amount / 100, " ", row.currency), /*#__PURE__*/React.createElement(TableCell, {
+<<<<<<< HEAD
+=======
+    className: classes.table__body__row__cell,
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
     style: {
       width: 160
     },
     align: "right"
   }, row.status), /*#__PURE__*/React.createElement(TableCell, {
+<<<<<<< HEAD
+=======
+    className: classes.table__body__row__cell,
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
     style: {
       width: 160
     },
     align: "right"
   }, row.tags))), emptyRows > 0 && /*#__PURE__*/React.createElement(TableRow, {
+<<<<<<< HEAD
+=======
+    className: classes.table__body__row,
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
     style: {
       height: 53 * emptyRows
     }
   }, /*#__PURE__*/React.createElement(TableCell, {
+    className: classes.table__body__row__cell,
     colSpan: 6
-  }))), /*#__PURE__*/React.createElement(TableFooter, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TablePagination, {
+  }))), /*#__PURE__*/React.createElement(TableFooter, {
+    className: classes.table__footer
+  }, /*#__PURE__*/React.createElement(TableRow, {
+    className: classes.table__footer__row
+  }, /*#__PURE__*/React.createElement(TablePagination, {
     rowsPerPageOptions: [5, 10, 25, {
       label: 'All',
       value: -1
     }],
-    colSpan: 3,
+    colSpan: 4,
     count: rows.length,
     rowsPerPage: rowsPerPage,
     page: page,
@@ -304,14 +432,20 @@ const PieChart = ({
   return /*#__PURE__*/React.createElement(Doughnut, {
     data: formattedData,
     options: {
-      maintainAspectRatio: true
+      maintainAspectRatio: true,
+      aspectRatio: 1,
+      responsive: true
     }
   });
 };
 
 let _ = t => t,
     _t;
+<<<<<<< HEAD
 const useStyles = makeStyles(theme => ({
+=======
+const useStyles$1 = makeStyles(theme => ({
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   root: {
     flexGrow: 1
   },
@@ -365,7 +499,11 @@ const TransparencyPage = ({
   messages,
   date
 }) => {
+<<<<<<< HEAD
   const classes = useStyles();
+=======
+  const classes = useStyles$1();
+>>>>>>> 17d6260bf4e4cb994d25c803c755ddd71084a69c
   const [width] = useState(800);
   const [height] = useState(300);
   const offset = 0;
@@ -417,39 +555,50 @@ const TransparencyPage = ({
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React.createElement("div", {
-    className: styles.title
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: "header"
+    className: styles.container
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "logo"
   }, /*#__PURE__*/React.createElement("img", {
     className: styles.header__logo,
     src: account.imageUrl,
     alt: ""
-  }), account.name), /*#__PURE__*/React.createElement("div", {
-    className: "content"
-  }, /*#__PURE__*/React.createElement("h2", null, /*#__PURE__*/React.createElement(FormattedMessage, {
-    id: "allExpensesFrom",
-    defaultMessage: "All expenses from {date}",
-    values: {
-      date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
+  })), /*#__PURE__*/React.createElement("h1", {
+    className: "title"
+  }, account.name), /*#__PURE__*/React.createElement("div", {
+    className: "content",
+    style: {
+      position: 'relative'
     }
-  })), /*#__PURE__*/React.createElement(Grid, {
+  }, /*#__PURE__*/React.createElement(Grid, {
     container: true,
     className: classes.root,
     spacing: 2
   }, /*#__PURE__*/React.createElement(Grid, {
     item: true,
-    xs: 8
+    xs: 12,
+    sm: 12,
+    md: 8,
+    lg: 8,
+    style: {
+      position: 'relative',
+      minHeight: 100,
+      minWidth: 500
+    }
   }, /*#__PURE__*/React.createElement(BarChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   })), /*#__PURE__*/React.createElement(Grid, {
     item: true,
-    xs: 4
+    xs: 12,
+    sm: 12,
+    md: 4,
+    lg: 4,
+    style: {
+      position: 'relative',
+      minHeight: 500,
+      minWidth: 500
+    }
   }, /*#__PURE__*/React.createElement(PieChart, {
-    expenses: expenses,
-    width: width,
-    height: height
+    expenses: expenses
   }))), /*#__PURE__*/React.createElement(ExpensesTable, {
     expenses: expenses,
     width: width,
