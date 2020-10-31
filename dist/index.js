@@ -429,7 +429,7 @@ function useWindowSize() {
       size = _useState[0],
       setSize = _useState[1];
 
-  React.useLayoutEffect(function () {
+  React.useEffect(function () {
     var updateSize = lodash.debounce(function () {
       setSize([window.innerWidth, window.innerHeight]);
     }, 100);

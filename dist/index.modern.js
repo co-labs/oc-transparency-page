@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import moment from 'moment';
@@ -426,7 +426,7 @@ function useWindowSize() {
       size = _useState[0],
       setSize = _useState[1];
 
-  useLayoutEffect(function () {
+  useEffect(function () {
     var updateSize = debounce(function () {
       setSize([window.innerWidth, window.innerHeight]);
     }, 100);
