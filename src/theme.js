@@ -6,31 +6,31 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '1.5em',
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '1.2em',
+      fontSize: '1.2em'
     }
   },
   charts: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   charts__bar: {},
   charts__pie: {},
   charts__table: {},
   header: {
     padding: '.5em',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   header__logo: {
-    height: '1em !important',
+    height: '1em !important'
   },
   header__title: {
     fontSize: '2em',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '1.6em',
+      fontSize: '1.6em'
     }
   },
   pagination: {
     flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+    marginLeft: theme.spacing(2.5)
   },
   pagination__first: {},
   pagination__prev: {},
@@ -43,7 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '1em',
     [theme.breakpoints.down('xs')]: {
       fontSize: '.8em',
-      padding: 10,
+      padding: 10
     }
   },
   table__body: {},
@@ -52,13 +52,11 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '.9em',
     [theme.breakpoints.down('xs')]: {
       fontSize: '.7em',
-      padding: 10,
+      padding: 10
     }
   },
   table__footer: {},
   table__footer__row: {},
   'table-container': {},
-  wrapper: {
-    border: '1px solid red',
-  },
+  wrapper: {}
 }))
