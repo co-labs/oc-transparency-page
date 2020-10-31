@@ -1,18 +1,10 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-<<<<<<< HEAD
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import moment from 'moment';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { orderBy, debounce } from 'lodash';
-=======
 import { IntlProvider } from 'react-intl';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { orderBy } from 'lodash';
 import moment from 'moment';
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
 import { Bar, Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
@@ -29,6 +21,116 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+
+var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
+
+var generateRainbow = ((numOfSteps, step) => {
+  let r, g, b;
+  const h = step / numOfSteps;
+  const i = ~~(h * 6);
+  const f = h * 6 - i;
+  const q = 1 - f;
+
+  switch (i % 6) {
+    case 0:
+      r = 1;
+      g = f;
+      b = 0;
+      break;
+
+    case 1:
+      r = q;
+      g = 1;
+      b = 0;
+      break;
+
+    case 2:
+      r = 0;
+      g = 1;
+      b = f;
+      break;
+
+    case 3:
+      r = 0;
+      g = q;
+      b = 1;
+      break;
+
+    case 4:
+      r = f;
+      g = 0;
+      b = 1;
+      break;
+
+    case 5:
+      r = 1;
+      g = 0;
+      b = q;
+      break;
+  }
+
+  return `#${`00${(~~(r * 255)).toString(16)}`.slice(-2)}${`00${(~~(g * 255)).toString(16)}`.slice(-2)}${`00${(~~(b * 255)).toString(16)}`.slice(-2)}`;
+});
+
+const BarChart = ({
+  expenses,
+  width,
+  height
+}) => {
+  const periods = [];
+  const cats = [];
+  expenses = orderBy(expenses, item => item.createdAt);
+  expenses.map(item => {
+    const month = new moment(item.createdAt).format('MM/YYYY');
+    let monthKey = periods.findIndex(i => i === month);
+
+    if (monthKey === -1) {
+      monthKey = periods.push(month);
+      monthKey--;
+    }
+
+    console.log('Month', monthKey);
+    let catKey = cats.findIndex(i => i.label === item.tags[0]);
+
+    if (catKey === -1) {
+      if (typeof item.tags[0] !== 'undefined') {
+        catKey = cats.push({
+          label: item.tags[0],
+          data: [],
+          backgroundColor: null,
+          borderColor: null,
+          borderWidth: 1,
+          stack: 'default'
+        });
+        catKey = catKey - 1;
+      }
+    }
+
+    if (typeof cats[catKey] !== 'undefined') {
+      if (typeof cats[catKey].data[monthKey] === 'undefined') {
+        cats[catKey].data[monthKey] = 0;
+      }
+
+      cats[catKey].data[monthKey] += item.amount / 100;
+    }
+  });
+  cats.map((i, k) => {
+    cats[k].backgroundColor = generateRainbow(cats.length, k);
+    cats[k].borderColor = generateRainbow(cats.length, k);
+  });
+  const formattedData = {
+    labels: periods,
+    datasets: cats
+  };
+  return /*#__PURE__*/React.createElement(Bar, {
+    data: formattedData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2
+    }
+  });
+};
 
 const useStyles = makeStyles(theme => ({
   body: {},
@@ -92,142 +194,6 @@ const useStyles = makeStyles(theme => ({
     border: '1px solid red'
   }
 }));
-
-<<<<<<< HEAD
-var generateRainbow = ((numOfSteps, step) => {
-  let r, g, b;
-  const h = step / numOfSteps;
-  const i = ~~(h * 6);
-  const f = h * 6 - i;
-  const q = 1 - f;
-=======
-  strings.raw = raw;
-  return strings;
-}
-
-var styles = {"container":"_1Lxpd","title":"_2KezC","logo":"_Lw2P8"};
-
-var generateRainbow = (function (numOfSteps, step) {
-  var r, g, b;
-  var h = step / numOfSteps;
-  var i = ~~(h * 6);
-  var f = h * 6 - i;
-  var q = 1 - f;
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
-
-  switch (i % 6) {
-    case 0:
-      r = 1;
-      g = f;
-      b = 0;
-      break;
-
-    case 1:
-      r = q;
-      g = 1;
-      b = 0;
-      break;
-
-    case 2:
-      r = 0;
-      g = 1;
-      b = f;
-      break;
-
-    case 3:
-      r = 0;
-      g = q;
-      b = 1;
-      break;
-
-    case 4:
-      r = f;
-      g = 0;
-      b = 1;
-      break;
-
-    case 5:
-      r = 1;
-      g = 0;
-      b = q;
-      break;
-  }
-
-  return `#${`00${(~~(r * 255)).toString(16)}`.slice(-2)}${`00${(~~(g * 255)).toString(16)}`.slice(-2)}${`00${(~~(b * 255)).toString(16)}`.slice(-2)}`;
-});
-
-const BarChart = ({
-  expenses,
-  width,
-  height
-}) => {
-  const periods = [];
-  const cats = [];
-  expenses = orderBy(expenses, item => item.createdAt);
-  expenses.map(item => {
-    const month = new moment(item.createdAt).format('MM/YYYY');
-    let monthKey = periods.findIndex(i => i === month);
-
-    if (monthKey === -1) {
-      monthKey = periods.push(month);
-      monthKey--;
-    }
-
-    let catKey = cats.findIndex(i => i.label === item.tags[0]);
-
-    if (catKey === -1) {
-      if (typeof item.tags[0] !== 'undefined') {
-        catKey = cats.push({
-          label: item.tags[0],
-          data: [],
-          backgroundColor: null,
-          borderColor: null,
-          borderWidth: 1,
-          stack: 'default'
-        });
-        catKey = catKey - 1;
-      }
-    }
-
-    if (typeof cats[catKey] !== 'undefined') {
-      if (typeof cats[catKey].data[monthKey] === 'undefined') {
-        cats[catKey].data[monthKey] = 0;
-      }
-
-      cats[catKey].data[monthKey] += item.amount / 100;
-    }
-  });
-  cats.map((i, k) => {
-    cats[k].backgroundColor = generateRainbow(cats.length, k);
-    cats[k].borderColor = generateRainbow(cats.length, k);
-  });
-  const formattedData = {
-    labels: periods,
-    datasets: cats
-  };
-<<<<<<< HEAD
-  const options = {
-    maintainAspectRatio: false,
-    responsive: true
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: width > 600 ? 350 : 450,
-      position: 'relative'
-=======
-  return /*#__PURE__*/React.createElement(Bar, {
-    data: formattedData,
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: 2
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
-    }
-  }, /*#__PURE__*/React.createElement(Bar, {
-    data: formattedData,
-    options: options
-  }));
-};
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -420,45 +386,30 @@ const PieChart = ({
     labels: labels,
     datasets: datasets
   };
-<<<<<<< HEAD
-  const options = {
-    maintainAspectRatio: false,
-    responsive: true
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: width > 600 ? 300 : 350,
-      position: 'relative'
-=======
   return /*#__PURE__*/React.createElement(Doughnut, {
     data: formattedData,
     options: {
       maintainAspectRatio: true,
       aspectRatio: 1,
       responsive: true
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     }
-  }, /*#__PURE__*/React.createElement(Doughnut, {
-    data: formattedData,
-    options: options
-  }));
+  });
 };
-
-function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
-  useLayoutEffect(() => {
-    const updateSize = debounce(() => {
-      setSize([window.innerWidth, window.innerHeight]);
-    }, 100);
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  return size;
-}
 
 let _ = t => t,
     _t;
+const useStyles$1 = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing(2)
+  }
+}));
 const ALL_EXPENSES = gql(_t || (_t = _`
   query ExpensesPage(
     $account: AccountReferenceInput!
@@ -501,8 +452,9 @@ const TransparencyPage = ({
   messages,
   date
 }) => {
-  const classes = useStyles();
-  const [width, height] = useWindowSize();
+  const classes = useStyles$1();
+  const [width] = useState(800);
+  const [height] = useState(300);
   const offset = 0;
   const dateFrom = useState(date ?? '2001-01-01');
   const {
@@ -552,35 +504,13 @@ const TransparencyPage = ({
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React.createElement("div", {
-<<<<<<< HEAD
-    className: classes.wrapper
-  }, /*#__PURE__*/React.createElement("div", {
-    className: classes.header
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: classes.header__title
-=======
     className: styles.container
   }, /*#__PURE__*/React.createElement("div", {
     className: "logo"
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React.createElement("img", {
-    className: classes.header__logo,
+    className: styles.header__logo,
     src: account.imageUrl,
     alt: ""
-<<<<<<< HEAD
-  }), account.name)), /*#__PURE__*/React.createElement("div", {
-    className: classes.body
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: classes.body__title
-  }, /*#__PURE__*/React.createElement(FormattedMessage, {
-    id: "allExpensesFrom",
-    defaultMessage: "All expenses from {date}",
-    values: {
-      date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
-    }
-  })), /*#__PURE__*/React.createElement(Grid, {
-    className: classes.charts,
-=======
   })), /*#__PURE__*/React.createElement("h1", {
     className: "title"
   }, account.name), /*#__PURE__*/React.createElement("div", {
@@ -589,16 +519,12 @@ const TransparencyPage = ({
       position: 'relative'
     }
   }, /*#__PURE__*/React.createElement(Grid, {
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     container: true,
-    spacing: 5
+    className: classes.root,
+    spacing: 2
   }, /*#__PURE__*/React.createElement(Grid, {
-    className: classes.charts__bar,
     item: true,
     xs: 12,
-<<<<<<< HEAD
-    md: 8
-=======
     sm: 12,
     md: 8,
     lg: 8,
@@ -607,25 +533,11 @@ const TransparencyPage = ({
       minHeight: 100,
       minWidth: 500
     }
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
   }, /*#__PURE__*/React.createElement(BarChart, {
     expenses: expenses
   })), /*#__PURE__*/React.createElement(Grid, {
-    className: classes.charts__pie,
     item: true,
     xs: 12,
-<<<<<<< HEAD
-    md: 4
-  }, /*#__PURE__*/React.createElement(PieChart, {
-    expenses: expenses,
-    width: width,
-    height: height
-  })), /*#__PURE__*/React.createElement(Grid, {
-    className: classes.charts__table,
-    item: true,
-    xs: 12
-  }, /*#__PURE__*/React.createElement(ExpensesTable, {
-=======
     sm: 12,
     md: 4,
     lg: 4,
@@ -637,11 +549,10 @@ const TransparencyPage = ({
   }, /*#__PURE__*/React.createElement(PieChart, {
     expenses: expenses
   }))), /*#__PURE__*/React.createElement(ExpensesTable, {
->>>>>>> 20978c9ce119208e550695df3ed34a6021230c2d
     expenses: expenses,
     width: width,
     height: height
-  }))))));
+  }))));
 };
 
 export default TransparencyPage;
