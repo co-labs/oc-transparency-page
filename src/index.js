@@ -109,15 +109,6 @@ const TransparencyPage = ({ slug, locale, messages, date }) => {
           </h1>
         </div>
         <div className={classes.body}>
-          <h2 className={classes.body__title}>
-            <FormattedMessage
-              id='allExpensesFrom'
-              defaultMessage='All expenses from {date}'
-              values={{
-                date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
-              }}
-            />
-          </h2>
           <Grid className={classes.charts} container spacing={5}>
             <Grid className={classes.charts__bar} item xs={12} md={8}>
               <BarChart expenses={expenses} width={width} height={height} />
