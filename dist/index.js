@@ -91,9 +91,7 @@ var useStyles = styles.makeStyles(function (theme) {
     table__footer: {},
     table__footer__row: {},
     'table-container': {},
-    wrapper: {
-      border: '1px solid red'
-    }
+    wrapper: {}
   };
 });
 
