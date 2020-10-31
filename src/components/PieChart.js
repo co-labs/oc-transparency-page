@@ -1,7 +1,7 @@
 import React from 'react'
 import { orderBy } from 'lodash'
 import generateRainbow from '../utils/generateRainbow'
-import { Doughnut } from 'react-chartjs-2'
+import { Bar, Doughnut } from 'react-chartjs-2'
 
 /**
  * Format a PieChart with the OpenCollective expenses data
@@ -47,15 +47,18 @@ const PieChart = ({ expenses, width, height }) => {
     datasets: datasets
   }
 
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+  }
+
   return (
-    <Doughnut
-      data={formattedData}
-      options={{
-        maintainAspectRatio: true,
-        aspectRatio: 1,
-        responsive: true
-      }}
-    />
+    <div style={{ height: width > 600 ? 300 : 350, position: 'relative' }}>
+      <Doughnut
+        data={formattedData}
+        options={options}
+      />
+    </div>
   )
 }
 

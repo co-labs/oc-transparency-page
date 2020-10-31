@@ -4,10 +4,10 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var client = require('@apollo/client');
 var reactIntl = require('react-intl');
-var styles$1 = require('@material-ui/core/styles');
-var Grid = _interopDefault(require('@material-ui/core/Grid'));
-var lodash = require('lodash');
 var moment = _interopDefault(require('moment'));
+var Grid = _interopDefault(require('@material-ui/core/Grid'));
+var styles = require('@material-ui/core/styles');
+var lodash = require('lodash');
 var reactChartjs2 = require('react-chartjs-2');
 var PropTypes = _interopDefault(require('prop-types'));
 var Table = _interopDefault(require('@material-ui/core/Table'));
@@ -34,120 +34,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var styles = {"container":"_styles-module__container__1Lxpd","title":"_styles-module__title__2KezC","logo":"_styles-module__logo__Lw2P8"};
-
-var generateRainbow = (function (numOfSteps, step) {
-  var r, g, b;
-  var h = step / numOfSteps;
-  var i = ~~(h * 6);
-  var f = h * 6 - i;
-  var q = 1 - f;
-
-  switch (i % 6) {
-    case 0:
-      r = 1;
-      g = f;
-      b = 0;
-      break;
-
-    case 1:
-      r = q;
-      g = 1;
-      b = 0;
-      break;
-
-    case 2:
-      r = 0;
-      g = 1;
-      b = f;
-      break;
-
-    case 3:
-      r = 0;
-      g = q;
-      b = 1;
-      break;
-
-    case 4:
-      r = f;
-      g = 0;
-      b = 1;
-      break;
-
-    case 5:
-      r = 1;
-      g = 0;
-      b = q;
-      break;
-  }
-
-  return "#" + ("00" + (~~(r * 255)).toString(16)).slice(-2) + ("00" + (~~(g * 255)).toString(16)).slice(-2) + ("00" + (~~(b * 255)).toString(16)).slice(-2);
-});
-
-var BarChart = function BarChart(_ref) {
-  var expenses = _ref.expenses;
-  var periods = [];
-  var cats = [];
-  expenses = lodash.orderBy(expenses, function (item) {
-    return item.createdAt;
-  });
-  expenses.map(function (item) {
-    var month = new moment(item.createdAt).format('MM/YYYY');
-    var monthKey = periods.findIndex(function (i) {
-      return i === month;
-    });
-
-    if (monthKey === -1) {
-      monthKey = periods.push(month);
-      monthKey--;
-    }
-
-    console.log('Month', monthKey);
-    var catKey = cats.findIndex(function (i) {
-      return i.label === item.tags[0];
-    });
-
-    if (catKey === -1) {
-      if (typeof item.tags[0] !== 'undefined') {
-        catKey = cats.push({
-          label: item.tags[0],
-          data: [],
-          backgroundColor: null,
-          borderColor: null,
-          borderWidth: 1,
-          stack: 'default'
-        });
-        catKey = catKey - 1;
-      }
-    }
-
-    if (typeof cats[catKey] !== 'undefined') {
-      if (typeof cats[catKey].data[monthKey] === 'undefined') {
-        cats[catKey].data[monthKey] = 0;
-      }
-
-      cats[catKey].data[monthKey] += item.amount / 100;
-    }
-  });
-  cats.map(function (i, k) {
-    cats[k].backgroundColor = generateRainbow(cats.length, k);
-    cats[k].borderColor = generateRainbow(cats.length, k);
-  });
-  var formattedData = {
-    labels: periods,
-    datasets: cats
-  };
-  return /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
-    data: formattedData,
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: 2
-    }
-  });
-};
-
-var useStyles = styles$1.makeStyles(function (theme) {
+var useStyles = styles.makeStyles(function (theme) {
   var _body__title, _header__title, _table__head__row__ce, _table__body__row__ce;
 
   return {
@@ -210,9 +97,125 @@ var useStyles = styles$1.makeStyles(function (theme) {
   };
 });
 
+var generateRainbow = (function (numOfSteps, step) {
+  var r, g, b;
+  var h = step / numOfSteps;
+  var i = ~~(h * 6);
+  var f = h * 6 - i;
+  var q = 1 - f;
+
+  switch (i % 6) {
+    case 0:
+      r = 1;
+      g = f;
+      b = 0;
+      break;
+
+    case 1:
+      r = q;
+      g = 1;
+      b = 0;
+      break;
+
+    case 2:
+      r = 0;
+      g = 1;
+      b = f;
+      break;
+
+    case 3:
+      r = 0;
+      g = q;
+      b = 1;
+      break;
+
+    case 4:
+      r = f;
+      g = 0;
+      b = 1;
+      break;
+
+    case 5:
+      r = 1;
+      g = 0;
+      b = q;
+      break;
+  }
+
+  return "#" + ("00" + (~~(r * 255)).toString(16)).slice(-2) + ("00" + (~~(g * 255)).toString(16)).slice(-2) + ("00" + (~~(b * 255)).toString(16)).slice(-2);
+});
+
+var BarChart = function BarChart(_ref) {
+  var expenses = _ref.expenses,
+      width = _ref.width;
+  var periods = [];
+  var cats = [];
+  expenses = lodash.orderBy(expenses, function (item) {
+    return item.createdAt;
+  });
+  expenses.map(function (item) {
+    var month = new moment(item.createdAt).format('MM/YYYY');
+    var monthKey = periods.findIndex(function (i) {
+      return i === month;
+    });
+
+    if (monthKey === -1) {
+      monthKey = periods.push(month);
+      monthKey--;
+    }
+
+    var catKey = cats.findIndex(function (i) {
+      return i.label === item.tags[0];
+    });
+
+    if (catKey === -1) {
+      if (typeof item.tags[0] !== 'undefined') {
+        catKey = cats.push({
+          label: item.tags[0],
+          data: [],
+          backgroundColor: null,
+          borderColor: null,
+          borderWidth: 1,
+          stack: 'default'
+        });
+        catKey = catKey - 1;
+      }
+    }
+
+    if (typeof cats[catKey] !== 'undefined') {
+      if (typeof cats[catKey].data[monthKey] === 'undefined') {
+        cats[catKey].data[monthKey] = 0;
+      }
+
+      cats[catKey].data[monthKey] += item.amount / 100;
+    }
+  });
+  cats.map(function (i, k) {
+    cats[k].backgroundColor = generateRainbow(cats.length, k);
+    cats[k].borderColor = generateRainbow(cats.length, k);
+  });
+  var formattedData = {
+    labels: periods,
+    datasets: cats
+  };
+  var options = {
+    maintainAspectRatio: false,
+    responsive: true
+  };
+  return /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      height: width > 600 ? 350 : 450,
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React__default.createElement(reactChartjs2.Bar, {
+    data: formattedData,
+    options: options
+  }));
+};
+
 function TablePaginationActions(props) {
   var classes = useStyles();
-  var theme = styles$1.useTheme();
+  var theme = styles.useTheme();
   var count = props.count,
       page = props.page,
       rowsPerPage = props.rowsPerPage,
@@ -374,7 +377,8 @@ var ExpensesTable = function ExpensesTable(_ref) {
 };
 
 var PieChart = function PieChart(_ref) {
-  var expenses = _ref.expenses;
+  var expenses = _ref.expenses,
+      width = _ref.width;
   var labels = [];
   var datasets = [{
     data: [],
@@ -407,15 +411,38 @@ var PieChart = function PieChart(_ref) {
     labels: labels,
     datasets: datasets
   };
-  return /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
-    data: formattedData,
-    options: {
-      maintainAspectRatio: true,
-      aspectRatio: 1,
-      responsive: true
+  var options = {
+    maintainAspectRatio: false,
+    responsive: true
+  };
+  return /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      height: width > 600 ? 300 : 350,
+      position: 'relative'
     }
-  });
+  }, /*#__PURE__*/React__default.createElement(reactChartjs2.Doughnut, {
+    data: formattedData,
+    options: options
+  }));
 };
+
+function useWindowSize() {
+  var _useState = React.useState([0, 0]),
+      size = _useState[0],
+      setSize = _useState[1];
+
+  React.useLayoutEffect(function () {
+    var updateSize = lodash.debounce(function () {
+      setSize([window.innerWidth, window.innerHeight]);
+    }, 100);
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return function () {
+      return window.removeEventListener('resize', updateSize);
+    };
+  }, []);
+  return size;
+}
 
 function _templateObject() {
   var data = _taggedTemplateLiteralLoose(["\n  query ExpensesPage(\n    $account: AccountReferenceInput!\n    $slug: String!\n    $offset: Int!\n    $dateFrom: ISODateTime!\n  ) {\n    expenses(\n      account: $account\n      orderBy: { field: CREATED_AT, direction: ASC }\n      offset: $offset\n      limit: 100\n      status: PAID\n      dateFrom: $dateFrom\n    ) {\n      offset\n      totalCount\n      limit\n      nodes {\n        id\n        amount\n        tags\n        description\n        currency\n        status\n        createdAt\n      }\n    }\n    account(slug: $slug) {\n      id\n      imageUrl\n      name\n    }\n  }\n"]);
@@ -426,20 +453,6 @@ function _templateObject() {
 
   return data;
 }
-var useStyles$1 = styles$1.makeStyles(function (theme) {
-  return {
-    root: {
-      flexGrow: 1
-    },
-    paper: {
-      height: 140,
-      width: 100
-    },
-    control: {
-      padding: theme.spacing(2)
-    }
-  };
-});
 var ALL_EXPENSES = client.gql(_templateObject());
 
 var TransparencyPage = function TransparencyPage(_ref) {
@@ -447,13 +460,11 @@ var TransparencyPage = function TransparencyPage(_ref) {
       locale = _ref.locale,
       messages = _ref.messages,
       date = _ref.date;
-  var classes = useStyles$1();
+  var classes = useStyles();
 
-  var _useState = React.useState(800),
-      width = _useState[0];
-
-  var _useState2 = React.useState(300),
-      height = _useState2[0];
+  var _useWindowSize = useWindowSize(),
+      width = _useWindowSize[0],
+      height = _useWindowSize[1];
 
   var offset = 0;
   var dateFrom = React.useState(date != null ? date : '2001-01-01');
@@ -504,55 +515,56 @@ var TransparencyPage = function TransparencyPage(_ref) {
     defaultLocale: "en",
     messages: messages
   }, /*#__PURE__*/React__default.createElement("div", {
-    className: styles.container
+    className: classes.wrapper
   }, /*#__PURE__*/React__default.createElement("div", {
-    className: "logo"
+    className: classes.header
+  }, /*#__PURE__*/React__default.createElement("h1", {
+    className: classes.header__title
   }, /*#__PURE__*/React__default.createElement("img", {
-    className: styles.header__logo,
+    className: classes.header__logo,
     src: account.imageUrl,
     alt: ""
-  })), /*#__PURE__*/React__default.createElement("h1", {
-    className: "title"
-  }, account.name), /*#__PURE__*/React__default.createElement("div", {
-    className: "content",
-    style: {
-      position: 'relative'
+  }), account.name)), /*#__PURE__*/React__default.createElement("div", {
+    className: classes.body
+  }, /*#__PURE__*/React__default.createElement("h2", {
+    className: classes.body__title
+  }, /*#__PURE__*/React__default.createElement(reactIntl.FormattedMessage, {
+    id: "allExpensesFrom",
+    defaultMessage: "All expenses from {date}",
+    values: {
+      date: moment(dateFrom, 'YYYY-MM-DD').format('DD/MM/YYYY')
     }
-  }, /*#__PURE__*/React__default.createElement(Grid, {
-    container: true,
-    className: classes.root,
-    spacing: 2
-  }, /*#__PURE__*/React__default.createElement(Grid, {
-    item: true,
-    xs: 12,
-    sm: 12,
-    md: 8,
-    lg: 8,
-    style: {
-      position: 'relative',
-      minHeight: 100,
-      minWidth: 500
-    }
-  }, /*#__PURE__*/React__default.createElement(BarChart, {
-    expenses: expenses
   })), /*#__PURE__*/React__default.createElement(Grid, {
+    className: classes.charts,
+    container: true,
+    spacing: 5
+  }, /*#__PURE__*/React__default.createElement(Grid, {
+    className: classes.charts__bar,
     item: true,
     xs: 12,
-    sm: 12,
-    md: 4,
-    lg: 4,
-    style: {
-      position: 'relative',
-      minHeight: 500,
-      minWidth: 500
-    }
-  }, /*#__PURE__*/React__default.createElement(PieChart, {
-    expenses: expenses
-  }))), /*#__PURE__*/React__default.createElement(ExpensesTable, {
+    md: 8
+  }, /*#__PURE__*/React__default.createElement(BarChart, {
     expenses: expenses,
     width: width,
     height: height
-  }))));
+  })), /*#__PURE__*/React__default.createElement(Grid, {
+    className: classes.charts__pie,
+    item: true,
+    xs: 12,
+    md: 4
+  }, /*#__PURE__*/React__default.createElement(PieChart, {
+    expenses: expenses,
+    width: width,
+    height: height
+  })), /*#__PURE__*/React__default.createElement(Grid, {
+    className: classes.charts__table,
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/React__default.createElement(ExpensesTable, {
+    expenses: expenses,
+    width: width,
+    height: height
+  }))))));
 };
 
 module.exports = TransparencyPage;

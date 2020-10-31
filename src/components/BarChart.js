@@ -27,10 +27,7 @@ const BarChart = ({ expenses, width, height }) => {
     if (monthKey === -1) {
       monthKey = periods.push(month)
       monthKey--
-    } else {
     }
-
-    console.log('Month', monthKey)
 
     let catKey = cats.findIndex((i) => i.label === item.tags[0])
 
@@ -68,15 +65,18 @@ const BarChart = ({ expenses, width, height }) => {
     datasets: cats
   }
 
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+  }
+
   return (
-    <Bar
-      data={formattedData}
-      options={{
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 2
-      }}
-    />
+    <div style={{ height: width > 600 ? 350 : 450, position: 'relative' }}>
+      <Bar
+        data={formattedData}
+        options={options}
+      />
+    </div>
   )
 }
 

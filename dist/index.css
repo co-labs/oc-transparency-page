@@ -1,16 +1,48 @@
 /* add css module styles here (optional) */
 
-._styles-module__container__1Lxpd{
-  text-align: center;
-  padding: 1em;
+._styles-module__wrapper__1I_qj {
+  border: 1px solid red !important;
 }
 
-._styles-module__title__2KezC {
-  padding: 0 0 0.5em;
+/* Header */
+._styles-module__header__1aDvk {
+  padding: .5em;
+  text-align: center;
+}
+
+._styles-module__header__title__3rE3S {
   font-size: 2em;
-  text-align: center;
 }
 
-._styles-module__logo__Lw2P8{
+._styles-module__header__logo__1XkLR {
+  height: 1em !important;
+}
+
+@media (max-width: 600px) {
+  ._styles-module__header__title__3rE3S {
+    font-size: 1.6em;
+  }
+}
+
+/* Body */
+._styles-module__body__2mo3X {
   text-align: center;
+}
+._styles-module__body__title__3-IJR {
+  font-size: 1.5em;
+}
+
+@media (max-width: 600px) {
+  ._styles-module__body__title__3-IJR {
+    font-size: 1.2em;
+  }
+}
+
+/* Footer */
+._styles-module__footer__24OKz {}
+
+@media (max-width: 600px) {
+  ._styles-module__header__1aDvk {
+    font-size: 1.5em;
+  }
 }
