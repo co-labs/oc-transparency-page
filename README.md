@@ -2,7 +2,7 @@
 
 > A React Component to integrate a transparency page of your collective into your project
 
-[![NPM](https://img.shields.io/npm/v/@co-labs/oc-transparency-page.svg)](https://www.npmjs.com/package/@co-labs/oc-transparency-page) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@co-labs/oc-transparency-page.svg)](https://www.npmjs.com/package/@co-labs/oc-transparency-page) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Plant Tree](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=Plant%20Tree&query=%24.total&url=https%3A%2F%2Fpublic.offset.earth%2Fusers%2Ftreeware%2Ftrees)](https://plant.treeware.earth/co-labs/oc-transparency-page) [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/co-labs/oc-transparency-page)
 
 ## Install
 
